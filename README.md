@@ -1,37 +1,9 @@
-## Welcome to GitHub Pages
+## zkpcreds
 
-You can use the [editor on GitHub](https://github.com/dhh1128/zkpcreds/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This repo contains information about [W3C verifiable credentials](https://www.w3.org/TR/vc-data-model/) that [use zero-knowledge proofs to achieve privacy](https://www.evernym.com/blog/categorizing-verifiable-credentials/#correlation). This is the [type of credentials](https://sovrin.org/wp-content/uploads/AnonCred-RWC.pdf) used in the [Sovrin ecosystem](https://sovrin.org), and is similar to approaches introduced with [ABC4Trust](https://www.abc4trust.eu/) and [Idemix from IBM Research](https://idemix.wordpress.com/).
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Professional cryptographers believe that the privacy offered by such credentials is useful and trustworthy. However, people behind other credential technologies have raised FUD. This is a place to gather and publish material on the topic, for public edification. As a whole, the repo is a personal project; however, specific artifacts may be endorsed or sponsored by the Sovrin Foundation (where I am a member of the Technical Governance Board) or by Evernym (where I work).
 
-### Markdown
+### Specific Artifacts
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/dhh1128/zkpcreds/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+* [Rebuttal to the "Trust Paradox" paper by Arnold and Longley](trust-paradox-rebuttal.html)
