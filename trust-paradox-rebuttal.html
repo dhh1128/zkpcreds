@@ -1,14 +1,118 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <link rel="stylesheet" href="default.css">
+</head>
 <body>
 
-<details>
-    <summary>Test html5 summary to see how it renders.</summary>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at purus at risus semper posuere.</p>
-    <p>Duis nec ornare metus. Proin consectetur turpis ut felis tristique, vestibulum aliquet nibh consequat. Morbi imperdiet sapien vel suscipit feugiat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent elementum in elit a pretium. Nullam tempor orci in sodales interdum. Ut ac arcu in ligula semper fringilla. Pellentesque egestas neque nulla, ut consectetur erat accumsan ut. Duis ornare a diam a congue. Donec ut nisl ipsum. Donec ultricies nisi et turpis fringilla accumsan.</p>
-</details>
+<section class="page-header">
+    <h1>Rebuttal to "Trust Paradox" paper</h1>
+    <h2>Daniel Hardman, Jan 2020</h2>
+</section>
 
-<p><b>Note:</b> The details tag is not supported in Internet Explorer.</p>
+<section class="main-content">
+    <details>
+        <summary>Background (What's the kerfuffle?)</summary>
+        <p>The December 2019 special issue of IEEE's <cite>Communications Standards</cite> magazine includes a <span title="We will provide a link once there's a public permalink available.">paper by Arnold and Longley</span> that claims ZKP-oriented credentials are fatally flawed. The authors assert that by providing absolute anonymity, such credentials let holders commit fraud with impunity--a trust paradox.</p>
+
+        <details>
+            <summary>FUD in an ongoing debate</summary>
+            <p>Although the "Trust Paradox" (TP) paper may be well motivated, it is deeply misleading. Its academic dressing won't satisfy an expert, but may be plausible for casual readers. And if readers dig, its flaws are subtle and technical enough to bore or discourage all but the most tenacious. Whether intended or not, this gives the paper the same effect as the worst kind of FUD.</p>
+
+            <p>The TP paper exposes a rift in the verifiable credentials community. Sovrin, Hyperledger, and Evernym have invested millions in ZKP-oriented credential tech because they believe in its privacy features; others have invested in something simpler and cheaper because they are dubious. The <a href="https://www.w3.org/TR/vc-data-model/">VC spec</a> allows either approach; the community couldn't come to alignment by the time it went to press. You should thus view the TP paper, and this rebuttal, as part of an ongoing debate, and you should apply a skeptical filter to partisan voices on either side (including mine and Arnold/Longley's).</p>
+        </details>
+
+        <p>To mitigate eye-glazing detail, I've organized my rebuttal into sections with expandable detail. You can just skim the headlines if you like--or you can dive into the details at whatever level you prefer. Please do check sources--and compare mine to those in the TP paper. I'm confident that the deeper you go, the more convinced you'll be.</p>
+    </details>
+
+    <details>
+        <summary>The TP paper contains factual errors.</summary>
+    </details>
+
+    <details>
+        <summary>It is unreasonably silent about 30+ years of discourse on its topic.</summary>
+        <p>Before anyone rushes to say it, let me state that appeal to authority is a logical fallacy; just because a person with an impressive CV says something doesn’t mean it’s true. I’m not suggesting that the paper is wrong because it disagrees with authorities. What I’m suggesting is that the paper exhibits a deafening silence about what other smart people have already said on the subject--and that this is indicative of a lack of rigor and objectivity. This should trigger some healthy doubt in the mind of any honest reader. Which parts of the trust paradox (which has been well understood since the beginning of ZKPs) have already been addressed, and how? What patterns of ZKP misuse have scholars already documented, and what best practices do they advocate? How are these best practices embodied or ignored by the ZKP systems that Arnold and Longley criticize? Without a map between the paper and the conversation that preceded it, we can’t judge where the paper is saying something new, and where it is raising concerns that are long since debunked. Hand waving looks more impressive than it should.</p>
+        <p>The references do cite a (very) few papers. However, a simple check reveals that the citations are just to cherry-pick a sentence or two; they barely connect at all on substance.</p>
+        <p>The paper attempts to work around this lack of rigor by conceding the mathematical soundness of ZKPs, and focusing instead on a purported novel insight about the tradeoffs between privacy and trust. What the paper doesn’t say is that this tradeoff--not just the mathematics--has been the major topic of discussion in the conversations it ignores.</p>
+    </details>
+
+    <details>
+        <summary>It lacks rigorous definitions of either “zero-knowledge proof” or “privacy” -- two concepts on which its entire analysis hinges.</summary>
+        <p>In a Sovrin credential context, we use terms like “zero-knowledge proof” or “ZKP”, along with “proving in zero knowledge”, in the same sense given by its inventors:
+
+            Zero-knowledge proofs are defined as those proofs that convey no additional knowledge other than the correctness of the proposition in question.
+
+            The wikipedia article summarizes the zero-knowledge property in a similar way:
+
+            If the statement is true, no verifier learns anything other than the fact that the statement is true.
+
+            In other words, a ZKP proves a statement or proposition without leaking anything extra.
+
+            As later work on the topic has formally verified the correctness of the ZKP concept, explanations have narrowed a bit. Now if you research the term, you get discussion about the 3-color graph problem, time machines, and “zero-knowledge proof of knowledge”--plus a framing that assumes the “proposition in question” is a claim that you know something. Other types of propositions can be proved in zero knowledge, but this is often not acknowledged. The wikipedia article correctly notes that a “zero-knowledge proof of knowledge is a special case when the statement consists only of the fact that the prover possesses the secret information.” However, other parts of the wikipedia article conflate the more general ZKP concept with the more specific ZKP-of-K concept, and this conflation is common in other treatments of the topic online.
+
+            The reason this is relevant to the current discussion is that I think the TP paper (which offers an expansion of the ZKP acronym but no formal definition) mostly assumes that ZKP = ZKP of K, whereas Sovrin people tend not to make that assumption. Just what constitutes the proposition to be proved in zero knowledge, in a credential interaction, is an interesting question. It goes to the heart of some of the assumptions in the TP paper. A lot of the misalignment around this topic probably derives from imprecision with this question and with the exact meaning of ZKP.
+            What Sovrin Considers a ZKP in a credential context
+            Think carefully about the characterization that a ZKP ”proves something without leaking anything extra.” In the identity context, Why would we ever want a “promiscuous” proof that leaks something extra/unnecessary? If our answer is, “Because we need the person not to be anonymous so we detect a malicious holder,” I suggest that we’re not reading the question carefully enough. The question assumes we have what we need--including maybe a strong identifier for malicious Alice to prevent fraud--and asks why we’d want something beyond that line of need, wherever it is drawn.
+
+            I submit that there is only one rational answer to this question: We wouldn’t ever want to prove more than we truly need. Proving all the facts that are necessary, including strong identifiers for Alice, sure--but accidentally proving something we didn’t intend to, and that circumstances don’t legitimately require, isn’t a virtue.
+
+            For the implementers of Sovrin, the definition of ZKP is tied to a technique that guarantees we conform to that line of need, not to any guarantee of anonymity. If proving “over 18” isn’t enough because the verifier also needs to know that the prover is the legitimate holder of the credential that supplied the evidence, then both facts fall inside the boundaries of “zero knowledge” for that circumstance, and thus within the scope of a legitimate ZKP. If we also need to prove that the over-18 holder is the same person who interacted yesterday with the same username, then this additional fact is also within the scope of the ZKP. The “zeroness” of the proof is that it doesn’t leak anything beyond the line of need, which is the proposition(s) being proved--NOT that it guarantees absolute anonymity and repudiation.
+
+            A proof of “over 21” is not zero-knowledge if the actual necessary proposition that needed proving was “over 18”--no matter what technique is used and what its mathematical guarantees might be. This is because 3 extra years of precision were leaked about the age.
+
+            A non-repudiable proof of “over 18” is zero-knowledge if (and only if) circumstances demand both “over 18” and non-repudiation. Proving in a non-repudiable way when repudiable would suffice leaks a signature that isn’t strictly required.
+
+            A proof that discloses Alice’s social security number is a ZKP if (and only if) the only fact that’s proved is the value of Alice’s social security number, and if that disclosure, and nothing more, was exactly what circumstances required.
+
+            A proof that discloses Alice’s genome and full medical history, her facts of birth, everything from her passport, and the full history of all interactions she’s ever had with her government is a ZKP if (and only if) the necessary facts are the ones proved, and if that proof exactly fit what circumstances required.
+
+            What this means, I think, is that an important subset of the conversations we’ve been having between ZKP proponents and detractors may have been us talking past each other. The TP paper elicits shoulder shrugging and reactions of “of course that would be foolish; we’re disallowing it” from Sovrin proponents, because the narrow form of ZKP posited in the paper isn’t what we’ve built. We’ve used the “over 18” problem as a convenient example, but we haven’t actually believed that the correct proposition to prove is something as trivial as “over 18”. This has always been shorthand in our minds for proving something closer to:
+
+            I possess a credential A,
+            matching schema B,
+            containing field C,
+            where C contains a numeric value > 18,
+            and the credential contains a cryptographic commitment to a link secret D that I know,
+            and the credential has an revocation index, E, which I know,
+            in revocation registry F,
+            and the credential’s status in F is unrevoked
+            and I know a signature G,
+            from issuer H,
+            endorsing that value C in the context of A, B, D, E, and F.
+
+            This is roughly the set of propositions, taken as a unit, that has to be proved in zero knowledge in our minds for an “over 18” scenario. Propositions D, E, and G are ZK proofs of knowledge; the rest are ZK proofs, but not ZK proofs of knowledge. Whenever we have been challenged with circumstances that vary the proving requirements slightly, we’ve always imagined modifying that set of propositions by adding or subtracting as needed, still without changing the general proof technique or the careful discipline of selecting exactly and only the necessary propositions.
+        </p>
+    </details>
+
+    <details>
+        <summary>It mishandles the distinction between proving something and sharing credentials.</summary>
+    </details>
+
+    <details>
+        <summary>It highlights trust gaps from foolish and unlikely behavior, not ZKP properties.</summary>
+        <p>Equivalent straw man scenarios for many of the gaps could be constructed using non-ZKP systems.</p>
+
+        <details>
+            <summary>The “real world” diverges from theory in ways that matter</summary>
+            <p>The idealized world of zero knowledge and cryptographic theory isn’t the landscape against which credential interactions play out. Rather, it’s a physical and human world. This means that exploits aren’t as easy as they look on paper, that vulnerability to other humans is rarely zero, and that imperfect proof is often adequate.</p>
+
+            <p>We can sometimes infer things from ZKPs, no matter how pure the math is. In the classic ZKP story of Ali Baba’s cave, Victor learns that Peggy is not deaf while Peggy’s proving in zero knowledge that she knows the cave password--otherwise she wouldn’t hear him when he shouts into the cave. Likewise, if I ask for a ZKP from a remote party and I get a response 10 milliseconds later, I can reasonably infer that the party I’m interacting with is located within 5 light milliseconds (1500 km) of my current location--light couldn’t have carried my request there and back any faster. With somewhat less assurance, I can guess that the party is on my local network, since ping times are usually not that fast for parties many network hops distant.</p>
+
+            <p>ZKPs presented in person--Alice requesting access to a voting booth, for example--are an important use case that the TP paper doesn’t consider. Such interactions carry significant amounts of context besides what’s embodied in mathematics. Regardless of ZKP anonymity, malicious Alice probably can’t vote twice with the same credential, if she appears before the same election official twice in quick succession.</p>
+
+            <p>The point of these observations is not that the trust paradox is irrelevant to ZKPs--only that claiming that ZKPs deliver “absolute anonymity” is a bit of a stretch. A prover using ZKP technology is probably still vulnerable in various ways. In the “real world”, ZKPs deliver “pretty good” zero knowledge, and experts do not claim otherwise.</p>
+
+            <p>It turns out that “pretty good” is often an appropriate standard for proof and vulnerability. US regulation makes it illegal to sell tobacco products to anyone under age 18. However, the regulation settles for fuzzy enforcement--vendors are supposed to demand photo ID from anyone who appears to be younger than 27. Judging “under 27” is left to the vendor, and auditing is spotty. The vendor and the person buying tobacco are mutually vulnerable to one another in a dynamic way; each balances risk versus benefit when deciding whether to strengthen proof. Undoubtedly some fraud occurs, but a significant deterrent effect is also created. I’m not aware of claims that the whole age verification system for tobacco is fatally flawed because of its lack of conformity to a mathematical ideal.</p>
+    </details>
+</section>
+
+    <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/dhh1128/zkpcreds">zkpcreds</a> is maintained by <a href="https://github.com/dhh1128">dhh1128</a>.</span>
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+        <p><b>Note:</b> The details tag is not supported in Internet Explorer.</p>
+    </footer>
+</section>
 
 </body>
+
 </html>
