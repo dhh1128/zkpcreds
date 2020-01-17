@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Rebuttal to Arnold and Longley's ZKP paper</title>
+    <title>Rebuttal to Arnold and Longley's ZKP article</title>
     <link rel="stylesheet" href="default.css">
 </head>
 <body>
@@ -15,6 +15,11 @@
     gaps only true with zkpok
     equate vuln with reputation (btw, vuln to whom?)
     mischaracterizes repudiation (to verifier versus the world)
+    factual errors
+        this statement: "In fact, the soundness of ZKPs requires the proof to be repudiable." -- it would be the zero knowledge property, not the soundness property
+        present credentials rather than proofs
+    ABC never defined
+    "traditional" abused
 
     <details>
         <summary>Background</summary>
@@ -24,11 +29,11 @@
             </p>
 
             <p>
-                The Arnold Longley (AL) paper is deeply misleading. Its academic dressing won't satisfy an expert, but may be plausible for casual readers. If readers dig, its flaws are technical enough to bore or discourage all but the very careful. Thus, the effect of the paper is FUD. It needs to be rebutted.
+                The article is deeply misleading. Its academic dressing won't satisfy an expert, but may be plausible for casual readers. If readers dig, its flaws are technical enough to bore or discourage all but the very careful. Thus, the effect of the article is FUD. It needs to be rebutted.
             </p>
 
             <p>
-                Arnold and Longley are ZKP critics, and I am a ZKP proponent. You should apply the same skeptical filter to both of us. To mitigate eye-glazing detail, I've organized this rebuttal into sections with expandable detail; skim or dive deep as desired. Don't forget to evaluate sources in the article and in its rebuttal (see <a href="#endnotes">Endnotes</a>).
+                Arnold and Longley are ZKP critics, and I am a ZKP proponent. You should apply the same skeptical filter to both of us. To mitigate eye-glazing detail, I've organized this rebuttal into sections with expandable detail; skim or dive deep as desired. Don't forget to evaluate sources in the article and here in my rebuttal (see <a href="#endnotes">Endnotes</a>).
             </p>
         </section>
     </details>
@@ -37,10 +42,10 @@
         <summary>The article cherry-picks a key quote out of context and makes much of the misleading result.</summary>
         <section class="more">
             <p>
-                The quote &mdash; attributed without a page number as reference 1 in Arnold and Longley's endnotes &mdash; is from the 148-page architectural description of the ABC4Trust system. This is one of the technologies that Arnold and Longley criticize. ABC4Trust is the product of decades of research by over a dozen of the world's leading privacy+cryptography researchers, including personnel at IBM Research and Microsoft Research. The quote's provenance does not make its thinking true or flawless, of course &mdash; but it should encourage careful citation. Arnold and Longley quote it like this, at the beginning of section 2.4 of their paper:
+                The quote &mdash; attributed without a page number as reference 1 in Arnold and Longley's endnotes &mdash; is from the 148-page architectural description of the ABC4Trust system. This technology is the product of decades of research by over a dozen of the world's leading privacy+cryptography researchers, including personnel at IBM Research and Microsoft Research. The quote's provenance does not make its thinking true or flawless, of course &mdash; but it should encourage careful citation. Arnold and Longley quote it like this, at the beginning of section 2.4 of their article:
             </p>
             <blockquote>
-                <span style="color:red">...efforts are being made to use ZKPs to limit the amount of additional correlatable information the user shares with the verifier. The idea is for a user to prove they have access to a valid credential without revealing the issuer's signature or the holder's identifier. Such credential presentations are</span> "cryptographically unlinkable and untraceable, meaning that verifiers cannot tell whether two presentation tokens were derived from the same or from different credentials, and that issuers cannot trace a presentation token back to the issuance of the underlying credentials."
+                <span style="color:red">As mentioned in the introduction, efforts are being made to use ZKPs to limit the amount of additional correlatable information the user shares with the verifier. The idea is for a user to prove they have access to a valid credential without revealing the issuer's signature or the holder's identifier. Such credential presentations are</span> "cryptographically unlinkable and untraceable, meaning that verifiers cannot tell whether two presentation tokens were derived from the same or from different credentials, and that issuers cannot trace a presentation token back to the issuance of the underlying credentials."
             </blockquote>
             <p>
                 Note where the quotation marks begin. Red text is from Arnold and Longley. They are quoting only a naked description, not the characterization that precedes it. We'll look at whether this is reasonable in a moment.
@@ -52,12 +57,12 @@
                 <span style="color:red">Remember,</span> "verifiers cannot tell whether two presentation tokens were derived from the same or from different credentials."
             </blockquote>
             <p>
-                The article's descriptions of the absolute privacy of ZKPs &mdash; the heart of sections 2.4 and 2.5, plus much of what follows &mdash; rest on this quote. It is the basis of Arnold and Longley's assertion that ZKP experts have espoused absolute unlinkability as a foundational goal. As a contributor to ZKP credential technology, I personally reject this characterization. But what do the experts say? A more reasonable context for their quote shows that they do, too. Here's more of what the experts actually said (from page 17 of the ABC4Trust documentation):
+                The article's descriptions of the absolute privacy of ZKPs &mdash; the heart of sections 2.4 and 2.5, plus much of what follows &mdash; rest on this quote. It is the basis of Arnold and Longley's assertion that ZKP experts have espoused absolute unlinkability as a foundational goal. As a contributor to ZKP credential technology, I personally reject this characterization. But what do their quoted experts say? A more context-full version of the quote shows that they do, too. Here's more of what they actually said (from page 17 of the ABC4Trust documentation):
             </p>
 
             <blockquote>
                 <p>
-                    <span style="color:blue">Presentation tokens based on Privacy-ABCs are in principle</span> cryptographically unlinkable and untrace- able, meaning that Verifiers cannot tell whether two presentation tokens were derived from the same or from different credentials, and that Issuers cannot trace a presentation token back to the issuance of the underlying credentials. <span style="color:blue">However, we will later discuss additional mechanisms that, with the User’s consent, enable a dedicated third party to recover this link again (see Section 2.5 for more details).</span>
+                    <span style="color:blue">Presentation tokens based on Privacy-ABCs are in principle</span> cryptographically unlinkable and untraceable, meaning that Verifiers cannot tell whether two presentation tokens were derived from the same or from different credentials, and that Issuers cannot trace a presentation token back to the issuance of the underlying credentials. <span style="color:blue">However, we will later discuss additional mechanisms that, with the User’s consent, enable a dedicated third party to recover this link again (see Section 2.5 for more details).</span>
                 </p>
                 <p>
                     <span style="color:blue">Obviously, presentation tokens are only as unlinkable as the information they intentionally reveal. For example, tokens that explicitly reveal a unique attribute (e.g., the User’s social security number) are fully linkable. Moreover, pseudonyms and inspection can be used to purposely create linkability across presentation tokens (e.g., to maintain state across sessions by the same User) and create traceability of presentation tokens (e.g., for accountability reasons in case of abuse). Finally, Privacy-ABCs have to be combined with anonymous communication channels (e.g., Tor onion routing) to avoid linkability in the “layers below”, e.g., by the IP addresses in the underlying communication channels or by the physical characteristics of the hardware device on which the tokens were generated.</span>
@@ -65,19 +70,27 @@
             </blockquote>
 
             <p>
-                In other words, what the experts actually intended to convey is a lot more nuanced than what Arnold and Longley assert. Presentations are unlinkable "in principle" ... "However..."
+                In other words, what the experts actually intended to convey is a lot more nuanced than what Arnold and Longley assert: ZKP-oriented presentations are unlinkable "in principle" ... "However..."
+            </p>
 
-                Importantly, the nuance has to do with vulnerability of the holder/prover to the verifier. The experts are pointing out vuln. Remember AL's assertions that there's a sweet spot for vuln? AL can't see sweet spot because they insist on ignoring systemic vuln. ZKPs are just trying to hit sweet spot.
+            <p>
+                To be fair to Arnold and Longley, their article does eventually mention some of the nuances raised by the ABC4Trust experts (inspection, disclosure of unique attributes). However, when they are mentioned, it is in other parts of the article, where their relevance to the chain of reasoning in sections 2.4 and 2.5 is diluted.
+            </p>
+            <p>
+                And an important nuance is entirely suppressed by Arnold and Longley: the interaction with communication channels. This is a major omission, because it's about the vulnerability of the prover. Arnold and Longley's whole argument depends on the assumption that a prover isn't vulnerable unless their reputation is at risk &mdash; and that the sweet spot in the privacy vs. vulnerability tradeoff is a point near the center. But if provers are vulnerable to the verifier because of properties of their communication channel, before a ZKP even takes place, doesn't that already move them toward the middle of the continuum, away from "absolute anonymity" Arnold and Longley want to claim?
+            </p>
+            <p>
+                Arnold and Longley are constructing a straw man here. No expert that I know claims that ZKP-oriented credentials provide absolute anonymity. [todo: cite] todo: example of location on network/speed of light, English-speaking, proving in person, etc.
             </p>
         </section>
     </details>
 
     <details>
-        <summary>The article doesn't define "zero-knowledge proofs" correctly &mdash; and it exploits this to hide various fallacies.</summary>
+        <summary>The article doesn't define "zero-knowledge proofs" correctly &mdash; and it allows this to obscure various fallacies.</summary>
         <section class="more">
 
             <p>
-                Arnold and Longley offer no formal definition of zero-knowledge proofs. The closest we get is this sentence in the introduction:
+                Arnold and Longley offer no formal definition of zero-knowledge proofs. The closest we get is this explanation:
             </p>
 
             <blockquote>
@@ -85,20 +98,29 @@
             </blockquote>
 
             <p>
-                This is NOT a good definition of zero-knowledge proofs in general, or of ZKPs in credentialing ecosystems; instead, it describes a narrow subcategory of ZKP, called a <dfn>zero-knowledge proof of knowledge</dfn> (<dfn>ZKPOK</dfn>)[<a id="ref1" href="#note1">1</a>] that has easy-to-highlight limitations. Here is the definition of the more general concept, from the seminal paper on ZKPs (which Arnold and Longley don't cite):
+                This is NOT a good definition of zero-knowledge proofs in general, or of ZKPs in credentialing ecosystems; instead, it describes a narrow subcategory of ZKP, called a <dfn>zero-knowledge proof <span style="color:red">of knowledge</span></dfn> (<dfn>ZKPOK</dfn>)[<a id="ref1" href="#note1">1</a>] that has easy-to-highlight limitations. Here is the definition of the more general concept, from the seminal paper on ZKPs (which Arnold and Longley don't cite):
             </p>
 
             <blockquote>
                 Zero-knowledge proofs are defined as those proofs that convey no additional knowledge other than the correctness of the proposition in question. [<a id="ref2" href="#note2">2</a>]
             </blockquote>
 
+            <p>
+                Note the difference. ZKPs aren't limited to proving possession of knowledge.
+            </p>
+
             <figure id="compare-defs">
                 <img src="compare-defs.png" alt="AL def is subset of actual def that matters">
-                <figcaption>Figure 1: The only definition offered by the AL paper is too narrow.</figcaption>
+                <figcaption>Figure 1: The only definition implied by the AL article is too narrow.</figcaption>
             </figure>
 
             <p>
-                The article's reasoning is based on the <dfn>composition fallacy</dfn> that if something is true about a subcategory, it must be true about the larger group.[<a id="ref3" href="#note3">3</a>]
+                The article's reasoning is based on the <dfn>composition fallacy</dfn> that if something is true about a subcategory (ZKPOKs), it must be true about the larger group (ZKPs).[<a id="ref3" href="#note3">3</a>] An example of the impact of this fallacy is in section 2.4, where Arnold and Longley claim:</p>
+            <blockquote>
+                However, because such a proof provides zero knowledge, it is repudiable &mdash; a key difference from the traditional digital signature approach.
+            </blockquote>
+            <p>
+                If ZKP-oriented credentials were limited to ZKPOKs, Arnold and Longley's claim would be true. But ZKP-oriented credentials don't have this limitation, and the claim is false.
             </p>
 
             <details>
@@ -123,14 +145,14 @@
     </details>
 
     <details>
-        <summary>The TP paper contains factual errors.</summary>
+        <summary>The article contains factual errors.</summary>
     </details>
 
     <details>
         <summary>It is unreasonably silent about 30+ years of discourse on its topic.</summary>
-        <p>Before anyone rushes to say it, let me state that appeal to authority is a logical fallacy; just because a person with an impressive CV says something doesn’t mean it’s true. I’m not suggesting that the paper is wrong because it disagrees with authorities. What I’m suggesting is that the paper exhibits a deafening silence about what other smart people have already said on the subject &mdash; and that this is indicative of a lack of rigor and objectivity. This should trigger some healthy doubt in the mind of any honest reader. Which parts of the trust paradox (which has been well understood since the beginning of ZKPs) have already been addressed, and how? What patterns of ZKP misuse have scholars already documented, and what best practices do they advocate? How are these best practices embodied or ignored by the ZKP systems that Arnold and Longley criticize? Without a map between the paper and the conversation that preceded it, we can’t judge where the paper is saying something new, and where it is raising concerns that are long since debunked. Hand waving looks more impressive than it should.</p>
+        <p>Before anyone rushes to say it, let me state that appeal to authority is a logical fallacy; just because a person with an impressive CV says something doesn’t mean it’s true. I’m not suggesting that the article is wrong because it disagrees with authorities. What I’m suggesting is that the article exhibits a deafening silence about what other smart people have already said on the subject &mdash; and that this is indicative of a lack of rigor and objectivity. This should trigger some healthy doubt in the mind of any honest reader. Which parts of the trust paradox (which has been well understood since the beginning of ZKPs) have already been addressed, and how? What patterns of ZKP misuse have scholars already documented, and what best practices do they advocate? How are these best practices embodied or ignored by the ZKP systems that Arnold and Longley criticize? Without a map between the article and the conversation that preceded it, we can’t judge where the article is saying something new, and where it is raising concerns that are long since debunked. Hand waving looks more impressive than it should.</p>
         <p>The references do cite a (very) few papers. However, a simple check reveals that the citations are just to cherry-pick a sentence or two; they barely connect at all on substance.</p>
-        <p>The paper attempts to work around this lack of rigor by conceding the mathematical soundness of ZKPs, and focusing instead on a purported novel insight about the tradeoffs between privacy and trust. What the paper doesn’t say is that this tradeoff &mdash; not just the mathematics &mdash; has been the major topic of discussion in the conversations it ignores.</p>
+        <p>The article attempts to work around this lack of rigor by conceding the mathematical soundness of ZKPs, and focusing instead on a purported novel insight about the tradeoffs between privacy and trust. What the article doesn’t say is that this tradeoff &mdash; not just the mathematics &mdash; has been the major topic of discussion in the conversations it ignores.</p>
     </details>
 
     <details>
@@ -206,7 +228,7 @@
     <details id="endnotes" open>
         <summary>Endnotes</summary>
         <section class="more">
-            <p id="note1">[<a href="#ref1">1</a>]: Many amateur and journeyman discussions of ZKPs make this same mistake. For example, <a target="source" href="https://en.wikipedia.org/wiki/Zero-knowledge_proof#Definition">the Wikipedia article on ZKPs</a> (retrieved Jan 16, 2020) is inconsistent. In its Definition section, Wikipedia gives a correct, general ZKP formulation: "if the statement is true, no verifier learns anything other than the fact that the statement is true." And in the introduction, it also notes (correctly): "A zero-knowledge proof of knowledge is a special case when the statement consists only of the fact that the prover possesses the secret information." However, earlier text in the introduction slips into the ZKP=ZKPOK false equivalence: "In cryptography, a zero-knowledge proof or zero-knowledge protocol is a method by which one party (the prover) can prove to another party (the verifier) that they know a value x, without conveying any information apart from the fact that they know the value x." Expert cryptographers are much more careful. See, for example, <a target="source" href="https://crypto.stanford.edu/pbc/notes/crypto/zk.html">this discussion of ZKPs from the creators of Stanford's PBC crypto library</a>, or <a target="source" href="https://eprint.iacr.org/2010/552.pdf">this academic paper on ZKPOKs by Hazay and Lindell</a>. For a better primer on ZKPs than wikipedia, try <a target="source" href="https://towardsdatascience.com/what-are-zero-knowledge-proofs-7ef6aab955fc">this one from towardsdatascience.com</a>.</p>
+            <p id="note1">[<a href="#ref1">1</a>]: Many amateur and journeyman discussions of ZKPs online offer the same mistaken description as Arnold and Longley. <a target="source" href="https://en.wikipedia.org/wiki/Zero-knowledge_proof#Definition">The Wikipedia article on ZKPs</a> (retrieved Jan 16, 2020) is inconsistent. In its Definition section, Wikipedia gives a correct, general ZKP formulation: "if the statement is true, no verifier learns anything other than the fact that the statement is true." And in the introduction, it also notes (correctly): "A zero-knowledge proof of knowledge is a special case when the statement consists only of the fact that the prover possesses the secret information." However, earlier text in the introduction slips into the ZKP=ZKPOK false equivalence: "In cryptography, a zero-knowledge proof or zero-knowledge protocol is a method by which one party (the prover) can prove to another party (the verifier) that they know a value x, without conveying any information apart from the fact that they know the value x." Expert cryptographers are much more careful. See, for example, <a target="source" href="https://crypto.stanford.edu/pbc/notes/crypto/zk.html">this discussion of ZKPs from the creators of Stanford's PBC crypto library</a>, or <a target="source" href="https://eprint.iacr.org/2010/552.pdf">this academic paper on ZKPOKs by Hazay and Lindell</a>. For a better primer on ZKPs than Wikipedia, try <a target="source" href="https://towardsdatascience.com/what-are-zero-knowledge-proofs-7ef6aab955fc">this one from towardsdatascience.com</a>. Notice that the "Where's Waldo" illustration it offers involves disclosure (showing Waldo's picture), not just proof of knowledge.</p>
 
             <p id="note2">[<a href="#ref2">2</a>]: S. Goldwasser, S. Micali, and C. Rackoff, "The knowledge complexity of interactive proof-systems, <cite>SIAM Journal on Computing</cite>, 18(1), 1989, pp. 186-208. <a target="source" href="https://epubs.siam.org/doi/abs/10.1137/0218012">https://epubs.siam.org/doi/abs/10.1137/0218012</a>. Note that this paper existed in some form as early as 1982. There’s a 1985 version, published for the IEEE Foundations of Computer Science conference that defines the adjective “0-knowledge” &mdash; but it is the 1989 version that gives the simple formulation above and that is most available today.</p>
 
