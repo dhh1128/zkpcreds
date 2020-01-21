@@ -34,7 +34,7 @@
             </p>
 
             <p>
-                The authors' formulation of tradeoffs in a trust paradox is insightful (though <a href="#point3">flawed</a>). It should be applauded. However, the article's application of the paradox to ZKP-oriented credentials is deeply misleading. It perpetuates misunderstanding of the technology it criticizes, reinforcing pervasive FUD.
+                The authors' formulation of tradeoffs in a trust paradox is insightful (though <a href="#point3">flawed</a>). It should be applauded. However, the article's application of the paradox to ZKP-oriented credentials is deeply misleading. It perpetuates misunderstanding of the technology it criticizes, propagating baseless FUD.
             </p>
 
             <p>
@@ -129,7 +129,31 @@
     </details>
 
     <details>
-        <summary id="point2">2. The article quotes experts out of context to build a straw man model of anonymity.</summary>
+        <summary id="point2">2. Its claims of "trust gaps" are rooted in a simple misconception.</summary>
+        <section class="more">
+            <p>
+                Tied to their mistaken definition of zero-knowledge proofs, Arnold and Longley apparently believe that ZKP-oriented credentials can't (or virtually never do) disclose identifiers.
+            </p>
+            <p>
+                This is false, as discussed in detail in <a href="#point1.2">point 1.2</a>. Lest you think the ability to disclose identifiers in zero knowledge is only theoretical, let me add that some concrete examples:
+            </p>
+            <ul>
+                <li>The ABC4Trust system architecture includes an entire section, 2.5, about this possibility.</li>
+                <li>The Hyperledger Indy ecosystem has supported disclosure of identifiers since version 1.0.</li>
+                <li>The world's first production deployment of Verifiable Credentials, the <a target="_blank" href="https://vonx.io/">Verifiable Organizations Network in British Columbia</a>, issued Indy-based ZKP credentials with strong identifiers (e.g., a business's government-issued ID) the day it went live in 2018, and has been doing so ever since. These credentials are regularly used to prove things about businesses, where the requests for proof include disclosure of those identifiers.</li>
+                <li>The company I work for, Evernym, has been demoing use cases that involve ZKP-based disclosure of identifiers of varying strengths (names, driver's license numbers, etc) since Jan 2017.</li>
+            </ul>
+            <p>
+                Here's why this matters: ZKP-oriented credentials can do everything &mdash; absolutely <em>everything</em> &mdash; that their non-ZKP cousins can do. If you want to put a holder's DID in a ZKP-oriented credential, and then disclose it, you can do that with a ZKP-oriented credential. That's just a mode of ZKP use. It's easy. (Whether it's smart from a privacy perspective is debatable, per circumstances. But that's a different question.)
+            </p>
+            <p>
+                Arnold and Longley talk like ZKP-oriented credentials constrain your choices, when in fact the truth is <em>exactly the opposite.</em> Credentials that lack ZKP capabalities
+            </p>
+        </section>
+    </details>
+
+    <details>
+        <summary id="point2">2. It quotes experts out of context to build a straw man model of anonymity.</summary>
         <section class="more">
             <p>
                 A pivotal claim in the article is that ZKP-oriented credentials guarantee absolute anonymity. As a contributor to ZKP-oriented credential technology, I reject this as exaggeration (see <a href="#point1.2">point 1.2</a>, also), but Arnold and Longley insist upon it. They quote ZKP experts (from a 148-page document, without citing a page number) to make the point:
@@ -231,7 +255,7 @@
                             </ol>
                         </li>
                         <li>Whenever Alice uses her link secret, she now adds to the other ZKPs in her presentation a new ZKP that guarantees to the verifier that Alice's link secret is registered but not yet released.</li>
-                        <li>If Alice ever shares her link secret with a dishonest party, the dishonest party has an incentive to confiscate the value Alice has escrowed. This constraint helps the verifier to trust Alice, even though Alice is anonymous.</li>
+                        <li>If Alice ever shares her link secret with a dishonest party, the dishonest party has an incentive to confiscate the value Alice has escrowed. This constraint helps the verifier to trust that Alice is a consistent person, even though Alice now has the option to be anonymous in a given context.</li>
                     </ul>
                     <p>Of course, this tool is not perfect. Alice could share her link secret with her sister, who may be dishonest with respect to the world but totally trustworthy toward Alice. However, many of the nightmare scenarios that Arnold and Longley imagine become unbelievable with this constraint in place--and the corner cases that remain apply to non-ZKP-oriented credentials as well.</p>
                 </section>
