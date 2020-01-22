@@ -63,8 +63,17 @@
                 Zero-knowledge proofs are defined as those proofs that convey no additional knowledge other than the correctness of the proposition in question.<span class="ref">[<a id="ref2" href="#note2">2</a>]</span>
             </blockquote>
             <p>
-                Note the difference: <em>ZKPs aren't limited to simple proofs of the possession of knowledge</em>. A familiar example is the Monero cryptocurrency, which proves certain transaction characteristics but hides specific amounts with zero-knowledge range proofs.<span class="ref">[<a id="ref3" href="#note3">3</a>]</span>
+                Note the difference: <em>ZKPs aren't limited to simple proofs of the possession of knowledge</em>. A familiar example is the Monero cryptocurrency, which proves certain transaction characteristics but hides specific amounts with zero-knowledge range proofs.<span class="ref">[<a id="ref3" href="#note3">3</a>]</span> Zeroness comes from not leaking.
             </p>
+            <ul>
+                <li>A proof of “over 21” is not zero-knowledge if the actual necessary proposition that needed proving was “over 18” &mdash; no matter what technique is used and what its mathematical guarantees might be. This is because 3 extra years of precision were leaked about the age.</li>
+
+                <li>A non-repudiable proof of “over 18” is zero-knowledge if (and only if) circumstances demand both “over 18” and non-repudiation. Proving in a non-repudiable way when repudiable would suffice leaks a signature that isn’t strictly required.</li>
+
+                <li>A proof that discloses Alice’s social security number is a ZKP if (and only if) the only fact that’s proved is the value of Alice’s social security number, and if that disclosure, and nothing more, was exactly what circumstances required.</li>
+
+                <li>A proof that discloses Alice’s genome and full medical history, her facts of birth, everything from her passport, and the full history of all interactions she’s ever had with her government is a ZKP if (and only if) the necessary facts are the ones proved, and if that proof exactly fit what circumstances required.</li>
+            </ul>
             <figure id="compare-defs">
                 <img src="compare-defs.png" alt="AL def is subset of actual def that matters">
                 <figcaption>Figure 2: The definition implied by the AL article is too narrow.</figcaption>
@@ -129,26 +138,156 @@
     </details>
 
     <details>
-        <summary id="point2">2. Its claims of "trust gaps" are rooted in a simple misconception.</summary>
+        <summary id="point2">2. It oversimplifies repudiation.</summary>
         <section class="more">
-            <p>
-                Tied to their mistaken definition of zero-knowledge proofs, Arnold and Longley apparently believe that ZKP-oriented credentials can't (or virtually never do) disclose identifiers.
-            </p>
-            <p>
-                This is false, as discussed in detail in <a href="#point1.2">point 1.2</a>. Lest you think the ability to disclose identifiers in zero knowledge is only theoretical, let me add that some concrete examples:
-            </p>
+            <p>When Alice proves something to Susie in private using a credential, two separate repudiation questions arise:</p>
+            <ol>
+                <li>Can Alice later repudiate <em>to Susie</em> the fact that she shared the credential, or what the credential contained?</li>
+                <li>Can Alice later repudiate <em>to the public</em> the fact she shared the credential with Susie, or what the credential contained?</li>
+            </ol>
+            <p>All credential technologies I know, including the ones oriented around ZKPs, enforce that the answer to Question 1 must be "No". Alice can't deny <em>to Susie</em> what happened in private with Susie.</p>
+            <p>Question 2 is far more interesting. Arnold and Longley assert that the answer to this question, too, <em>must</em> be "No". Or more precisely, they don't recognize the distinction between these two questions, and the only answer they give for the conflated combination is "No." If that's your position, then anything Alice proves to Susie in confidence can later be revealed--by Susie, by government subpoena, by a hacker, by a malicious sysadmin--and <em>proved</em>, publicly or to third parties. Alice gives away, forever, her control over proving whatever facts she shares with Susie.</p>
+            <p>Sometimes, this is exactly what we want. If the proved fact is that Alice agreed to pay SusieBank for a mortgage, then SusieBank must be able to prove it in a court of law, regardless of Alice's cooperation.</p>
+            <p>But what if Susie is a medical researcher, and Alice is proving that she's HIV positive? Should Susie be able prove Alice's HIV status to the public, just because Alice proved it to Susie &mdash; or should this require special consent? What if Susie works in a company's HR department, and Alice is proving her identity to Susie so she can file a sexual harrassment complaint against her boss? Should Susie be able to prove Alice's identity just because Alice proved it to her?</p>
+            <p>Note that these same questions can also be framed in terms of a verifier's best interests. Would the medical researcher like the option of knowing Alice's HIV status, without having to insure against the risk that a hack will leak proof of HIV status to the public? Would Susie in the HR department like to know for sure who Alice is, without worrying that a malicious sysadmin can "out" the victim?</p>
+            <p>ZKP-oriented are nuanced; non-ZKP-oriented credentials are a blunt instrument:</p>
+            <table>
+                <tr>
+                    <th>Question</th><th>ZKP answer</th><th>non-ZKP answer</th>
+                </tr>
+                <tr>
+                    <td>Can Alice repudiate to Susie?</td><td>No (enforced by crypto)</td><td rowspan="2">No (enforced by crypto)</td>
+                </tr>
+                <tr>
+                    <td>Can Alice repudiate to others?</td><td>Maybe (verifier and prover agree in advance to terms of use; enforced by crypto)</td>
+                </tr>
+            </table>
+            <p>ZKP-oriented credentials give the prover and the verifier options. They are fully capable of supporting public non-repudiation, like their simpler counterpart. If the verifier and prover agree that a proof will be non-repudiable (e.g., in the case of the mortgage), then the format of the proof makes non-repudiation enforceable through the cryptography. This is, and always has been, the default behavior of the ZKP-oriented credentials in Hyperledger Indy. However, if the verifier and prover both agree that a proof should be repudiable to parties outside the private interaction (e.g., in the case of the HIV test), then the zero-knowledge proof can commit Alice only to Susie; she can deny the interaction to the public. No comparable option is available without zero-knowledge proofs. Therefore, ZKP-oriented credentials are more powerful with respect to repudiation than the alternative, not the opposite.</p>
+            <p>Arnold and Longley appear not to understand this &mdash; perhaps because they assume (wrongly) that the only way to achieve non-repudiation is to disclose a signature value. Thus, many of the article's proximate and downstream arguments about repudiation fall apart.</p>
+        </section>
+    </details>
+
+    <details>
+        <summary>The trust gaps it highlights arise from foolish and unlikely assumptions, not ZKP properties.</summary>
+        <section class="more">
+        <p>
+            Arnold and Longley build their case against ZKP-oriented credentials by positing the need for evidence of "over 18" status [Introduction]. This is a common example used in ZKP literature, and it's fine as a starting point. But Arnold and Longley distort it by positing that a ZKP-oriented approach to this problem should begin with a <em>credential</em> containing exactly and only that assertion. This takes them far from reality; ZKP proponents would never agree to that. Why?
+        </p>
+        <ul>
+            <li>Because the posited credential contains no issuance date or expiration date, the "over 18" status cannot be evaluated with respect to time &mdash; past, present, or future. <em>No issuer requires "over 18" without some reference to time; therefore the posited credential is useless even before we begin analyzing what proofs might be generated from it.</em></li>
+            <li>Because the credential lacks any revocation feature, we can't evaluate whether its original issuer stands behind what they once asserted.</li>
+            <li>Such a starting point conflates the distinction between a credential and a proof. What the verifier requires is <em>proof</em> of "over 18" &mdash; NOT whatever scraps of information can be gleaned from a <em>credential</em> of "over 18." A major purpose of ZKP-oriented credentials is to enable this distinction, so you prove "over 18" using whatever common, rich credential are handy, like a driver's license or a passport. Such credentials are not "intended to communicate to the verifier Alice is over the age of 18" [Example 2.5] &mdash; they're intended to prove general facts that the holder can adapt to whatever proving requirements arise. They typically have dozens of useful fields, including birthdates instead of a boolean "over 18" assertion.</li>
+        </ul>
+        <p>
+            Starting from a degenerate, fatally flawed credential that doesn't resemble any likely reality, Arnold and Longley argue that the proofs possible with their imagined credential have "trust gaps." This is a "begging the question" fallacy.
+        </p>
+        <p>
+            A realistic scenario should actually look like more like this, assuming the behavior of a mature ZKP-oriented credential technology like the one in Hyperledger Indy:
+        </p>
+        <ul>
+            <li>Given: Alice possesses a digital driver's license.</li>
+            <li>A verifier asks her to prove that:</li>
+            <ol>
+                <li>She possess a credential A,</li>
+                <li>matching schema B (a canonical driver's license schema),</li>
+                <li>containing field C (birthdate),</li>
+                <li>where C contains a date value more than 18 years before today's date,</li>
+                <li>and the credential is bound to Alice with mechanism D so other holders can't use it,</li>
+                <li>and the credential has an revocation index, E, which Alice knows,</li>
+                <li>in revocation registry F,<li>
+                <li>and the credential’s status in F is unrevoked</li>
+                <li>and Alice know a signature G,</li>
+                <li>from issuer H (the government authority that issues driver's licenses),</li>
+                <li>endorsing the unmodified value C in the context of A, B, D, E, and F.</li>
+            </ol>
+        </ul>
+        <p>
+            Of course, the verifier need not track all these details in constructing a proof request, and Alice need not track them as she decides how to respond; technicalities can be (and typically are) handled by software. Both parties probably just understand the request as "prove with your unrevoked, valid driver's license that you're over age 18 today." However, the list above is a good approximation of what code actually manages when such a request is in flight. The options for generating and evaluating proof are much richer than what Arnold and Longley want us to imagine.
+        </p>
+        <details>
+            <summary>Verifiers, not technology, decide what to trust.</summary>
+            <section class="more">
+                <p>
+                    So, what of the key conclusion of Arnold and Longley's Example 2.5 &mdash; that ZKPs anonymize the holder/prover, effectively erasing the part of the proof labeled "D" in the details above?
+                </p>
+                <p>
+                    To answer that question, consider <em>who does the erasing</em> that creates the imagined trust gap. Is it the verifier, or the prover? If it's the verifier, then they're foolish; they've voluntarily opened themselves up to fraud by not requiring the prover to be the legitmate holder of the credential. If it's the prover, then the proof doesn't match the requirements of the verifier; only a foolish verifier would accept it. Either way, a "trust gap" only occurs with a foolish verifier. <em>Exactly the same sort of mistakes can occur with foolish verifiers and non-ZKP credentials</em>; trust gaps are a characteristic of careless interactions, not ZKPs.
+                </p>
+            </section>
+        </details>
+
+        <details>
+            <summary>ZKPs offer more options for binding a credential to a prover, not less.</summary>
+            <section class="more">
+                <p>
+                    Maybe Arnold and Longley imagine that ZKP-oriented credentials offer particularly poor choices about how to bind a prover to a credential in mechanism D?
+                </p>
+                <p>
+                    To analyze this possibility, we first need to understand how non-ZKP-oriented credentials solve the problem. They bind credentials to provers by always doing both of the following:
+                </p>
+                <ol>
+                    <li>Requiring the prover to disclose "enough" attributes to endanger reputation.</li>
+                    <li>Requiring the prover to sign the presentation so the presentation is publicly non-repudiable (see <a href="#point3">point 3</a>).
+                </ol>
+                <p>
+                    As discussed in <a href="#point1.2">point 1.2</a>, ZKP-oriented credentials support action 1, to exactly the same degree as their non-ZKP counterparts. The verifier could request that Alice's ZKP disclose one or more disclosed identifiers &mdash; a name and a driver's license number, or a DID, for example.
+                </p>
+                <ul>
+                    <li>The ABC4Trust system architecture includes an entire section, 2.5, about this possibility.</li>
+                    <li>The Hyperledger Indy ecosystem has supported disclosure of identifiers since version 1.0.</li>
+                    <li>The company I work for, Evernym, has been demoing use cases that involve ZKP-based disclosure of identifiers of varying strengths (names, driver's license numbers, etc) since Jan 2018.</li>
+                    <li>The world's first production deployment of Verifiable Credentials, the <a target="_blank" href="https://vonx.io/">Verifiable Organizations Network in British Columbia</a>, issued Indy-based ZKP credentials with strong identifiers (e.g., a business's government-issued ID) the day it went live in 2018, and has been doing so ever since. These credentials are regularly used to prove things about businesses, where the requests for proof include disclosure of those identifiers.</li>
+                </ul>
+                <p>
+                    As discussed in <a href="#point3">point 3</a>, ZKP-oriented credentials default to a non-repudiable presentation that provides the same guarantee as action 2. It is done differently from a simple signature, but it amounts to the same thing.
+                </p>
+                <p>
+                    Thus, ZKP-oriented credentials can and sometimes do impose exactly the same binding requirements as non-ZKP-oriented credentials. What's different is advanced features that ZKPs <em>offer to customize trust/privacy tradeoffs</em> &mdash; NOT in trust assumptions enforced by supposedly inflexible ZKPs.
+                </p>
+                <p>
+                    One advanced feature is a binding based on biometrics, in either privacy-preserving or privacy degrading modes. This is discussed further in <a href="#point3.1">point 3.1</a>.
+                </p>
+                <p>
+                    The other advanced feature is a link secret or correlation secret. This is a value known to the legitimate holder, and embedded in the credential at time of issuance. Knowledge of the link secret is a kind of evidence that the prover is the legitimate holder.
+                </p>
+                <p>
+                    A criticism of link secrets is that malicious Alice can give away this knowledge, undermining its value as evidence. This is theoretically true, but can be mitigated in various ways. We argue about them in other places (see point 2 and 3, for example). But the big point here is that if a verifier doesn't like link secrets, ZKP-oriented credentials impose no requirement that the verifier base trust on them. They can request a binding based on biometrics or traditional identifiers instead (or in addition). <em>The verifier, not the technology, decides what they will trust.</em>
+                </p>
+            </section>
+        </details>
+    </details>
+
+    <details>
+        <summary id="point2">2. It gets limited utility exactly backward.</summary>
+        <section class="more">
+            <p>Arnold and Longley claim that ZKP-oriented credentials "must introduce mechanisms that limit their utility." Just the opposite is true:</p>
             <ul>
-                <li>The ABC4Trust system architecture includes an entire section, 2.5, about this possibility.</li>
-                <li>The Hyperledger Indy ecosystem has supported disclosure of identifiers since version 1.0.</li>
-                <li>The world's first production deployment of Verifiable Credentials, the <a target="_blank" href="https://vonx.io/">Verifiable Organizations Network in British Columbia</a>, issued Indy-based ZKP credentials with strong identifiers (e.g., a business's government-issued ID) the day it went live in 2018, and has been doing so ever since. These credentials are regularly used to prove things about businesses, where the requests for proof include disclosure of those identifiers.</li>
-                <li>The company I work for, Evernym, has been demoing use cases that involve ZKP-based disclosure of identifiers of varying strengths (names, driver's license numbers, etc) since Jan 2017.</li>
+                <li>ZKP-oriented credentials support <em>all</em> of the same mechanisms to bind a holder to a credential as their non-ZKP-oriented counterparts. The correlation secret that ZKP-oriented credentials add on top of this gives an extra option with privacy benefit in some cases. However, a verifier is not required to trust it, either in its bare form or combined with advanced techniques like reuse detection or escrow. ZKP-oriented credentials also support sophisticated use of biometrics, with configurable privacy. Again, these are options, not requirements. They do not constrain how the verifier achieves trust. Only a verifier does that.</li>
+                <li>ZKP-oriented credentials support the same non-repudiation options as their non-ZKP-oriented counterparts. The option for negotiated repudiability with respect to the public is a value-add with ZKPs; it lets the verifier and the holder negotiate different tradeoffs if they like, but it does not force trust to be achieved a particular way.</li>
             </ul>
             <p>
-                Here's why this matters: ZKP-oriented credentials can do everything &mdash; absolutely <em>everything</em> &mdash; that their non-ZKP cousins can do. If you want to put a holder's DID in a ZKP-oriented credential, and then disclose it, you can do that with a ZKP-oriented credential. That's just a mode of ZKP use. It's easy. (Whether it's smart from a privacy perspective is debatable, per circumstances. But that's a different question.)
+                Put these two observations together, and the conclusion is simple: the set of addressable use cases with ZKPs is larger than the set of use cases without them. All use cases that require strong guarantees about non-repudiation and reputational risk are doable with or without ZKP-oriented credentials &mdash; but only ZKP-oriented credentials allow more nuanced tradeoffs that enhance privacy. To make this concrete:
             </p>
-            <p>
-                Arnold and Longley talk like ZKP-oriented credentials constrain your choices, when in fact the truth is <em>exactly the opposite.</em> Credentials that lack ZKP capabalities
-            </p>
+            <table>
+                <tr>
+                    <th>Proof Requirements</th><th>Doable without ZKP?</th><th>Doable with ZKPs?</th>
+                </tr>
+                <tr><td>Use credentials to prove facts on a mortgage application, disclosing lots of Alice's PII</td><td>Yes</td><td>Yes</td></tr>
+                <tr><td>Prove Alice has an unexpired driver's license so she can rent a car, disclosing lots of Alice's PII</td><td>Yes</td><td>Yes</td></tr>
+                <tr><td>Use a special-purpose "over-18" credential to prove only that Alice is over 18</td><td>Yes (if better than article's straw man)</td><td>Yes (same caveat)</td></tr>
+                <tr><td>Use a driver's license or passport to prove only that Alice is over 18</td><td>No</td><td>Yes</td></tr>
+                <tr><td>Prove to insurance company that Alice is HIV positive &mdash; publicly non-repudiable (research can pre-prove it)</td><td>Yes</td><td>Yes</td></tr>
+                <tr><td>Prove to medical researcher that Alice is HIV positive &mdash; publicly repudiable (researcher can't re-prove it)</td><td>No</td><td>Yes</td></tr>
+                <tr><td>Prove to Acme's HR dept only that Alice is a female employee in the Houston office, so she can make a semi-anonymous sexual harrassment complaint</td><td>No</td><td>Yes</td></tr>
+                <tr><td>Prove only that Alice has a credit score between 750 and 800, without revealing what the score is.</td><td>No</td><td>Yes</td></tr>
+                <tr><td>Prove only that Alice is female, over 45, lives in one of 10 postal codes, and has an annual income of six figures, without revealing further details.</td><td>No</td><td>Yes</td></tr>
+                <tr><td>Prove only that Alice possesses an unexpired major credit card, without revealing further details.</td><td>No</td><td>Yes</td></tr>
+                <tr><td>Prove only that Alice is a registered voter who hasn't already voted in an election, without identifying her.</td><td>No</td><td>Yes</td></tr>
+                <tr><td>Prove only that credential A and credential B were issued to the same person, without revealing additional information.</td><td>No</td><td>Yes</td></tr>
+                <tr><td>Remotely prove that Alice is bound to a credential by a biometric, without disclosing the biometric to verifier.</td><td>No</td><td>Yes</td></tr>
+                <tr><td>Prove that Alice is bound to a credential by a correlation secret protected by a link secret bond that has not been confiscated, but could have been by any malicious party she shared the secret with.</td><td>No</td><td>Yes</td></tr>
+            </table>
+            <p>Now, which form of credentials has constrained use cases, and which does not?</p>
         </section>
     </details>
 
@@ -162,7 +301,7 @@
                 As mentioned in the introduction, efforts are being made to use ZKPs to limit the amount of additional correlatable information the user shares with the verifier. The idea is for a user to prove they have access to a valid credential without revealing the issuer's signature or the holder's identifier. Such credential presentations are "<span style="color:blue">cryptographically unlinkable and untraceable, meaning that verifiers cannot tell whether two presentation tokens were derived from the same or from different credentials, and that issuers cannot trace a presentation token back to the issuance of the underlying credentials.</span>"<span class="ref">[Arnold and Longley, section 2.4, expert subquote in blue]</span>
             </blockquote>
             <p>
-                The article then conflates "cryptographically unlinkable" in the quote with general unlinkability (another composition fallacy like the one discussed in <a href="#point1">point 1</a>), and uses this to justify their claim of anonymity:
+                The article then conflates "cryptographically unlinkable" in the quote with <em>general</em> unlinkability (another composition fallacy like the one discussed in <a href="#point1">point 1</a>), and uses this to justify their claim of anonymity:
             </p>
             <blockquote>
                 For the purpose of unlinkability, a presentation must not include any protocol information that could uniquely identify the user. In this way, ZKPs anonymize the holder of the credential, rendering their activity untraceable.<span class="ref">[Arnold and Longley, section 2.4]</span>
@@ -192,7 +331,7 @@
                 <figcaption>Figure 1: Actual vs. claimed, theoretical privacy.</figcaption>
             </figure>
             <p>
-                This is a big deal. Arnold and Longley's whole argument rests on the assumption that a prover isn't vulnerable when they're perfectly anonymous, because their reputation isn't at risk &mdash; and that the sweet spot in the privacy vs. vulnerability tradeoff is a point where some privacy must be traded away in the cryptography. But the experts they misquote are careful to itemize some ways that absolute anonymity is only a theory anyway; according to these experts, practical risks move an interaction toward the middle of Arnold and Longley's curve independent of cryptographic choices. The AL article is arguing a straw man.
+                This is a big deal. Arnold and Longley's whole argument rests on the assumption that a prover isn't vulnerable when they're perfectly anonymous, because their reputation isn't at risk &mdash; and that the sweet spot in the privacy vs. vulnerability tradeoff is a point where some privacy must be traded away in the cryptography. But the experts they misquote are careful to itemize some ways that absolute anonymity is only a theory anyway; according to these experts, practical factors move an interaction toward the middle of Arnold and Longley's curve independent of cryptography. The AL article is arguing a straw man.
             </p>
         </section>
     </details>
@@ -209,7 +348,7 @@
             <p>This is fine, as far as it goes &mdash; but the thinking is far too narrow. Trust in others arises out of <em>confidence in constraints</em>. Reputation risk is only one of many constraints on human behavior.
             </p>
             <ul>
-                <li>The public trusts people who operate Bitcoin miners because their machines are constrained by an ungameable proof-of-work algorithm.</li>
+                <li>The public trusts people who operate Bitcoin miners because their machines are constrained by an ungameable proof-of-work algorithm &mdash; NOT because of reputation.</li>
                 <li>A bank trusts employees not to steal cash from the vault after hours because the vault has a time lock that can't be overridden.</li>
                 <li>A detective trusts a suspect's innocence because fingerprints don't match.</li>
                 <li>Acme Corp trusts a newly hired salesman to work hard because he's paid on commission.</li>
@@ -269,87 +408,48 @@
     </details>
 
     <details>
-        <summary id="point4">4. The article's conclusion about addressable use cases is exactly backwards.</summary>
+        <summary>It is unreasonably silent about 30+ years of discourse on its topic.</summary>
         <section class="more">
-            The article's abstract alludes to contains this claim:
+            <p>Before anyone rushes to say it, let me state that appeal to authority is a logical fallacy; just because a person with an impressive CV says something doesn’t mean it’s true. I’m not suggesting that the article is wrong because it disagrees with authorities. What I’m suggesting is that the article exhibits a deafening silence about what other smart people have already said on the subject &mdash; and that this is indicative of a lack of rigor and objectivity. This should trigger some healthy doubt in the mind of any honest reader. Which parts of the trust paradox (which has been well understood since the beginning of ZKPs) have already been addressed, and how? What patterns of ZKP misuse have scholars already documented, and what best practices do they advocate? How are these best practices embodied or ignored by the ZKP systems that Arnold and Longley criticize? Without a map between the article and the conversation that preceded it, we can’t judge where the article is saying something new, and where it is raising concerns that are long since debunked. Hand waving looks more impressive than it should.</p>
+            <p>The references do cite a (very) few papers. However, a simple check reveals that the citations are just to cherry-pick a sentence or two; they barely connect at all on substance.</p>
+            <p>The article attempts to work around this lack of rigor by conceding the mathematical soundness of ZKPs, and focusing instead on a purported novel insight about the tradeoffs between privacy and trust. What the article doesn’t say is that this tradeoff &mdash; not just the mathematics &mdash; has been the major topic of discussion in the conversations it ignores.</p>
         </section>
     </details>
 
     <details>
-        <summary>It is unreasonably silent about 30+ years of discourse on its topic.</summary>
-        <p>Before anyone rushes to say it, let me state that appeal to authority is a logical fallacy; just because a person with an impressive CV says something doesn’t mean it’s true. I’m not suggesting that the article is wrong because it disagrees with authorities. What I’m suggesting is that the article exhibits a deafening silence about what other smart people have already said on the subject &mdash; and that this is indicative of a lack of rigor and objectivity. This should trigger some healthy doubt in the mind of any honest reader. Which parts of the trust paradox (which has been well understood since the beginning of ZKPs) have already been addressed, and how? What patterns of ZKP misuse have scholars already documented, and what best practices do they advocate? How are these best practices embodied or ignored by the ZKP systems that Arnold and Longley criticize? Without a map between the article and the conversation that preceded it, we can’t judge where the article is saying something new, and where it is raising concerns that are long since debunked. Hand waving looks more impressive than it should.</p>
-        <p>The references do cite a (very) few papers. However, a simple check reveals that the citations are just to cherry-pick a sentence or two; they barely connect at all on substance.</p>
-        <p>The article attempts to work around this lack of rigor by conceding the mathematical soundness of ZKPs, and focusing instead on a purported novel insight about the tradeoffs between privacy and trust. What the article doesn’t say is that this tradeoff &mdash; not just the mathematics &mdash; has been the major topic of discussion in the conversations it ignores.</p>
+        <summary>It is wrong about ZKPs being vulnerable to advances in crypto.</summary>
+        <section class="more">
+            <p>An important claim in the abstract is that with ZKP-oriented credentials, "[g]reater trust must be placed in the shelf life of cryptography to prevent the user from being unwantonly correlated than alternative approaches." [Abstract] The basis of this claim is elaborated in section 3.3:
+            </p>
+            <blockquote>
+                ZKP ABC systems that encourage users to mix all of their identities and attributes together introduce a new risk: correlation across identities. Such systems use information hiding, or encryption, to enable a user to prove that their attributes are linked together. The user presents a value that has been mathematically modified by their correlation secret to the verifier. The expectation is that this operation cannot be reversed by the verifier. Each time they encrypt their correlation secret, they expose a different value, unless they are using link secret reuse to fill trust gaps. A user in this system is giving to every verifier an encrypted copy of the secret binding all of their identities together. This may be particularly surprising since the very party the user is trying to keep this information away from is the verifier. Fear that the verifier may correlate their information in undesirable ways is the whole reason for utilizing ZKPs. Since the encrypted secret is given directly to the verifier, user privacy is at the mercy of the security of the cryptographic scheme used. For example, if this cryptography is not quantum resistant, then a future quantum computer could decrypt this information. Revealing links across all of a user’s various identities and attributes catastrophically eliminates the user’s privacy.
+            </blockquote>
+            <p>The problem with this narrative is that it's based on a deep misunderstanding of how cryptographic commitments relates to encryption. Users of ZKPs are NOT giving an encrypted copy of their link secrets to either issuers or verifiers; they're making a cryptographic commitment to their link secret when they interact with the issuer, and the issuer is embedding evidence of that commitment in the credential as it's issued. This evidence is later used when proving, to demonstrate to a verifier that the holder knows the same value that they previously committed to. At no time is the value itself is ever embedded in the credential, even in encrypted form.</p>
+            <p>Cryptographic commitments are a bit like shadows. By inspecting a shadow, you can tell something about the object that cast it. You know the object existed, and you can estimate its visual magnitude at the point where it interrupted the light. You also know something about its shape. However, you cannot reconstruct a three-dimensional object from a two-dimensional shadow; an infinite number of three-dimensional objects could interrupt light in the same way. They could have any color or texture or mass.
+            </p>
+            <p>Similarly, the evidence of a cryptographic commitment that's embedded in a ZKP credential can be used to prove to a verifier that the holder knows the secret &mdash; but it can't be used to "decrypt" the link secret, because what's there is only a faint echo of the original value, not a complete transformation of the value.</p>
+        </section>
     </details>
 
     <details>
-        <summary>It lacks rigorous definitions of either “zero-knowledge proof” or “privacy”  &mdash;  two concepts on which its entire analysis hinges.</summary>
-        <p>In a Sovrin credential context, we use terms like “zero-knowledge proof” or “ZKP”, along with “proving in zero knowledge”, in the same sense given by its inventors:
-
-            Zero-knowledge proofs are defined as those proofs that convey no additional knowledge other than the correctness of the proposition in question.
-
-            The wikipedia article summarizes the zero-knowledge property in a similar way:
-
-            If the statement is true, no verifier learns anything other than the fact that the statement is true.
-
-            In other words, a ZKP proves a statement or proposition without leaking anything extra.
-
-            As later work on the topic has formally verified the correctness of the ZKP concept, explanations have narrowed a bit. Now if you research the term, you get discussion about the 3-color graph problem, time machines, and “zero-knowledge proof of knowledge” &mdash; plus a framing that assumes the “proposition in question” is a claim that you know something. Other types of propositions can be proved in zero knowledge, but this is often not acknowledged. The wikipedia article correctly notes that a “zero-knowledge proof of knowledge is a special case when the statement consists only of the fact that the prover possesses the secret information.” However, other parts of the wikipedia article conflate the more general ZKP concept with the more specific ZKP-of-K concept, and this conflation is common in other treatments of the topic online.
-
-            The reason this is relevant to the current discussion is that I think the TP paper (which offers an expansion of the ZKP acronym but no formal definition) mostly assumes that ZKP = ZKP of K, whereas Sovrin people tend not to make that assumption. Just what constitutes the proposition to be proved in zero knowledge, in a credential interaction, is an interesting question. It goes to the heart of some of the assumptions in the TP paper. A lot of the misalignment around this topic probably derives from imprecision with this question and with the exact meaning of ZKP.
-            What Sovrin Considers a ZKP in a credential context
-            Think carefully about the characterization that a ZKP ”proves something without leaking anything extra.” In the identity context, Why would we ever want a “promiscuous” proof that leaks something extra/unnecessary? If our answer is, “Because we need the person not to be anonymous so we detect a malicious holder,” I suggest that we’re not reading the question carefully enough. The question assumes we have what we need &mdash; including maybe a strong identifier for malicious Alice to prevent fraud &mdash; and asks why we’d want something beyond that line of need, wherever it is drawn.
-
-            I submit that there is only one rational answer to this question: We wouldn’t ever want to prove more than we truly need. Proving all the facts that are necessary, including strong identifiers for Alice, sure &mdash; but accidentally proving something we didn’t intend to, and that circumstances don’t legitimately require, isn’t a virtue.
-
-            For the implementers of Sovrin, the definition of ZKP is tied to a technique that guarantees we conform to that line of need, not to any guarantee of anonymity. If proving “over 18” isn’t enough because the verifier also needs to know that the prover is the legitimate holder of the credential that supplied the evidence, then both facts fall inside the boundaries of “zero knowledge” for that circumstance, and thus within the scope of a legitimate ZKP. If we also need to prove that the over-18 holder is the same person who interacted yesterday with the same username, then this additional fact is also within the scope of the ZKP. The “zeroness” of the proof is that it doesn’t leak anything beyond the line of need, which is the proposition(s) being proved &mdash; NOT that it guarantees absolute anonymity and repudiation.
-
-            A proof of “over 21” is not zero-knowledge if the actual necessary proposition that needed proving was “over 18” &mdash; no matter what technique is used and what its mathematical guarantees might be. This is because 3 extra years of precision were leaked about the age.
-
-            A non-repudiable proof of “over 18” is zero-knowledge if (and only if) circumstances demand both “over 18” and non-repudiation. Proving in a non-repudiable way when repudiable would suffice leaks a signature that isn’t strictly required.
-
-            A proof that discloses Alice’s social security number is a ZKP if (and only if) the only fact that’s proved is the value of Alice’s social security number, and if that disclosure, and nothing more, was exactly what circumstances required.
-
-            A proof that discloses Alice’s genome and full medical history, her facts of birth, everything from her passport, and the full history of all interactions she’s ever had with her government is a ZKP if (and only if) the necessary facts are the ones proved, and if that proof exactly fit what circumstances required.
-
-            What this means, I think, is that an important subset of the conversations we’ve been having between ZKP proponents and detractors may have been us talking past each other. The TP paper elicits shoulder shrugging and reactions of “of course that would be foolish; we’re disallowing it” from Sovrin proponents, because the narrow form of ZKP posited in the paper isn’t what we’ve built. We’ve used the “over 18” problem as a convenient example, but we haven’t actually believed that the correct proposition to prove is something as trivial as “over 18”. This has always been shorthand in our minds for proving something closer to:
-
-            I possess a credential A,
-            matching schema B,
-            containing field C,
-            where C contains a numeric value > 18,
-            and the credential contains a cryptographic commitment to a link secret D that I know,
-            and the credential has an revocation index, E, which I know,
-            in revocation registry F,
-            and the credential’s status in F is unrevoked
-            and I know a signature G,
-            from issuer H,
-            endorsing that value C in the context of A, B, D, E, and F.
-
-            This is roughly the set of propositions, taken as a unit, that has to be proved in zero knowledge in our minds for an “over 18” scenario. Propositions D, E, and G are ZK proofs of knowledge; the rest are ZK proofs, but not ZK proofs of knowledge. Whenever we have been challenged with circumstances that vary the proving requirements slightly, we’ve always imagined modifying that set of propositions by adding or subtracting as needed, still without changing the general proof technique or the careful discipline of selecting exactly and only the necessary propositions.
-        </p>
+        <summary>It has factual errors.</summary>
     </details>
 
     <details>
-        <summary>It mishandles the distinction between proving something and sharing credentials.</summary>
+        <summary>Its credential proxying scenario applies at least as well to credentials that don't use ZKPs.</summary>
     </details>
 
     <details>
-        <summary>It highlights trust gaps from foolish and unlikely behavior, not ZKP properties.</summary>
-        <p>Equivalent straw man scenarios for many of the gaps could be constructed using non-ZKP systems.</p>
+        <summary>The “real world” diverges from theory in ways that matter</summary>
+        <p>The idealized world of zero knowledge and cryptographic theory isn’t the landscape against which credential interactions play out. Rather, it’s a physical and human world. This means that exploits aren’t as easy as they look on paper, that vulnerability to other humans is rarely zero, and that imperfect proof is often adequate.</p>
 
-        <details>
-            <summary>The “real world” diverges from theory in ways that matter</summary>
-            <p>The idealized world of zero knowledge and cryptographic theory isn’t the landscape against which credential interactions play out. Rather, it’s a physical and human world. This means that exploits aren’t as easy as they look on paper, that vulnerability to other humans is rarely zero, and that imperfect proof is often adequate.</p>
+        <p>We can sometimes infer things from ZKPs, no matter how pure the math is. In the classic ZKP story of Ali Baba’s cave, Victor learns that Peggy is not deaf while Peggy’s proving in zero knowledge that she knows the cave password &mdash; otherwise she wouldn’t hear him when he shouts into the cave. Likewise, if I ask for a ZKP from a remote party and I get a response 10 milliseconds later, I can reasonably infer that the party I’m interacting with is located within 5 light milliseconds (1500 km) of my current location &mdash; light couldn’t have carried my request there and back any faster. With somewhat less assurance, I can guess that the party is on my local network, since ping times are usually not that fast for parties many network hops distant.</p>
 
-            <p>We can sometimes infer things from ZKPs, no matter how pure the math is. In the classic ZKP story of Ali Baba’s cave, Victor learns that Peggy is not deaf while Peggy’s proving in zero knowledge that she knows the cave password &mdash; otherwise she wouldn’t hear him when he shouts into the cave. Likewise, if I ask for a ZKP from a remote party and I get a response 10 milliseconds later, I can reasonably infer that the party I’m interacting with is located within 5 light milliseconds (1500 km) of my current location &mdash; light couldn’t have carried my request there and back any faster. With somewhat less assurance, I can guess that the party is on my local network, since ping times are usually not that fast for parties many network hops distant.</p>
+        <p>ZKPs presented in person &mdash; Alice requesting access to a voting booth, for example &mdash; are an important use case that the TP paper doesn’t consider. Such interactions carry significant amounts of context besides what’s embodied in mathematics. Regardless of ZKP anonymity, malicious Alice probably can’t vote twice with the same credential, if she appears before the same election official twice in quick succession.</p>
 
-            <p>ZKPs presented in person &mdash; Alice requesting access to a voting booth, for example &mdash; are an important use case that the TP paper doesn’t consider. Such interactions carry significant amounts of context besides what’s embodied in mathematics. Regardless of ZKP anonymity, malicious Alice probably can’t vote twice with the same credential, if she appears before the same election official twice in quick succession.</p>
+        <p>The point of these observations is not that the trust paradox is irrelevant to ZKPs &mdash; only that claiming that ZKPs deliver “absolute anonymity” is a bit of a stretch. A prover using ZKP technology is probably still vulnerable in various ways. In the “real world”, ZKPs deliver “pretty good” zero knowledge, and experts do not claim otherwise.</p>
 
-            <p>The point of these observations is not that the trust paradox is irrelevant to ZKPs &mdash; only that claiming that ZKPs deliver “absolute anonymity” is a bit of a stretch. A prover using ZKP technology is probably still vulnerable in various ways. In the “real world”, ZKPs deliver “pretty good” zero knowledge, and experts do not claim otherwise.</p>
-
-            <p>It turns out that “pretty good” is often an appropriate standard for proof and vulnerability. US regulation makes it illegal to sell tobacco products to anyone under age 18. However, the regulation settles for fuzzy enforcement &mdash; vendors are supposed to demand photo ID from anyone who appears to be younger than 27. Judging “under 27” is left to the vendor, and auditing is spotty. The vendor and the person buying tobacco are mutually vulnerable to one another in a dynamic way; each balances risk versus benefit when deciding whether to strengthen proof. Undoubtedly some fraud occurs, but a significant deterrent effect is also created. I’m not aware of claims that the whole age verification system for tobacco is fatally flawed because of its lack of conformity to a mathematical ideal.</p>
-        </details>
+        <p>It turns out that “pretty good” is often an appropriate standard for proof and vulnerability. US regulation makes it illegal to sell tobacco products to anyone under age 18. However, the regulation settles for fuzzy enforcement &mdash; vendors are supposed to demand photo ID from anyone who appears to be younger than 27. Judging “under 27” is left to the vendor, and auditing is spotty. The vendor and the person buying tobacco are mutually vulnerable to one another in a dynamic way; each balances risk versus benefit when deciding whether to strengthen proof. Undoubtedly some fraud occurs, but a significant deterrent effect is also created. I’m not aware of claims that the whole age verification system for tobacco is fatally flawed because of its lack of conformity to a mathematical ideal.</p>
     </details>
 
     <details id="endnotes">
