@@ -65,7 +65,7 @@
 
                 <li>A non-repudiable proof of “over 18” is zero-knowledge if (and only if) circumstances demand both “over 18” and non-repudiation. Proving in a non-repudiable way when repudiable would suffice leaks a signature that isn’t strictly required. (For more on leaking signatures, see point X.)</li>
 
-                <li>A proof that discloses Alice’s social security number is a ZKP if (and only if) the only fact that’s proved is the value of Alice’s social security number, and if that disclosure, and nothing more, was exactly what circumstances required.</li>
+                <li>A proof that discloses Alice’s passport number is a ZKP if (and only if) the only fact that’s proved is the value of Alice’s passport number, and if that disclosure, and nothing more, was exactly what circumstances required.</li>
 
                 <li>A proof that discloses Alice’s genome and full medical history, her facts of birth, everything from her passport, and the full history of all interactions she’s ever had with her government is a ZKP if (and only if) the necessary facts are the ones proved, and if that proof exactly fit what circumstances required.</li>
             </ul>
@@ -232,6 +232,7 @@
             <details>
                 <summary id="point3.2">3.2 Escrow is another elegant, powerful tool.</summary>
                 <section class="more">
+                    <p>THIS SECTION WILL BE REWRITTEN IN TWO WAYS: 1) explain link secrets first, so escrowing them makes more sense. 2) redescribe the mechanisms such that the smart contract doesn't hold secrets. (It can't. Secrets need to be released by a service, at the smart contract's instruction. I need to explain why that's different from the "trusted third [or fourth] party" that Arnold and Longley diss. The difference is that the party we're trusting here is just like a bank trusted to move money; it's trust that a party who knows nothing about our interaction will do their job, not trust where the party in question knows everything and could sabotage our trust. It's like trusting a mobile carrier in an SSI interaction.)</p>
                     <p>
                         Arnold and Longley point out <span class="ref">[section 3.4]</span> that provers have to agree before these mechanisms become an option. This is true, and it should temper our enthusiasm to some degree. However, the authors then dismiss the idea outright by claiming that escrow requires a fourth party that is trusted by both the verifier and the prover, and that this defeats the whole point of ZKPs.
                     </p>
@@ -434,7 +435,7 @@
                 The problem with this narrative is that it's based on a profound misunderstanding of how cryptographic commitments relates to encryption. Users of ZKPs are NOT giving an encrypted copy of their link secrets to either issuers or verifiers; they're making a cryptographic commitment to their link secret when they interact with the issuer, and the issuer is embedding evidence of that commitment in the credential as it's issued. This evidence is later used when proving, to demonstrate to a verifier that the holder knows the same value that they previously committed to. At no time is the value itself ever embedded in the credential or proof, even in encrypted form.
             </p>
             <p>
-                Cryptographic commitments are a bit like shadows. By inspecting a shadow, you can tell something about the object that cast it. You know the object existed, and you can estimate its visual magnitude at the point where it interrupted the light. You also know something about its shape. However, you cannot reconstruct a three-dimensional object from a two-dimensional shadow; an infinite number of three-dimensional objects could interrupt light in the same way. They could have any color or texture or mass.
+                Cryptographic commitments are a bit like shadows. By inspecting a shadow, you can tell something about the object that cast it. You know the object existed, and you can estimate its visual magnitude at the point where it interrupted the light. You also know something about its shape. However, you cannot reconstruct a three-dimensional object from a two-dimensional shadow; an infinite number of three-dimensional objects could interrupt light in the same way. They could have any color or texture or mass or orientation.
             </p>
             <figure id="3-shadows">
                 <img src="3-shadows.png" alt="the same shadow can be cast by an infinite number of objects">
@@ -451,7 +452,7 @@
     </details>
 
     <details>
-        <summary id="getright">Summary (where we agree and disagree)</summary>
+        <summary id="summary">Summary (where we agree and disagree)</summary>
         <section class="more">
             <table>
                 <tr><th style="width:45%">Idea</th><th>AL article</th><th style="width:45%">Authors of this rebuttal</th></tr>
@@ -534,8 +535,8 @@
         </section>
     </details>
 
-    <details id="endnotes">
-        <summary>Endnotes</summary>
+    <details>
+        <summary id="endnotes">Endnotes</summary>
         <section class="more">
             <p id="note1"><span class="ref">[<a href="#ref1">1</a>]</span>&nbsp; Many amateur and journeyman discussions of ZKPs online offer the same conflated description as Arnold and Longley. This is because they are either unaware of the distinction, or the distinction doesn't matter in their context. <a target="source" href="https://en.wikipedia.org/wiki/Zero-knowledge_proof#Definition">The Wikipedia article on ZKPs</a> (retrieved Jan 16, 2020) is inconsistent. In its Definition section, Wikipedia gives a correct, general ZKP formulation: "if the statement is true, no verifier learns anything other than the fact that the statement is true." And in the introduction, it also notes correctly: "A zero-knowledge proof of knowledge is a special case when the statement consists only of the fact that the prover possesses the secret information." However, earlier text in the introduction slips into the ZKP=ZKPOK conflation: "In cryptography, a zero-knowledge proof or zero-knowledge protocol is a method by which one party (the prover) can prove to another party (the verifier) that they know a value <var>x</var>, without conveying any information apart from the fact that they know the value <var>x</var>."</p>
 
