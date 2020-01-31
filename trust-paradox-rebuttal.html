@@ -236,14 +236,14 @@
                 The target of much of Arnold and Longley's FUD is a mechanism that ZKP mechanisms use to bind credentials to their holder. The article calls this mechanism <dfn>correlation secrets</dfn> in some places, and <dfn>link secrets</dfn> in others. These are synonyms; we'll use the shorter term.
             </p>
             <p>
-                Link secrets are large random numbers that only a holder is supposed to know. The math behind them is a bit esoteric, and it trips up Arnold and Longley (see <a href="#point8">point 8</a>). A simple though imperfect<span class="ref">[<a id="refj" href="#notej">j</a>]</span> analogy is to think of them like an image that's used to generate watermarks. A holder and issuer cooperatively use link secrets to "watermark" credentials at issuance time, to bind them uniquely to the holder. Later, during a proving interaction, the prover shows the verifier in zero knowledge that they can generate a "watermark" that shares carefully selected characteristics with the original. This is not possible unless the prover knows the holder's secret; thus, it is evidence that the credentials used for proving belong to them instead of someone else.
+                Link secrets are large random numbers that only a holder is supposed to know. The math behind them is a bit esoteric, and it trips up Arnold and Longley (see <a href="#point8">point 8</a>). A simple though imperfect<span class="ref">[<a id="refj" href="#notej">j</a>]</span> analogy is to think of them like a tool that's used to generate watermarks. A holder and issuer cooperatively use link secrets to "watermark" credentials at issuance time, to bind them uniquely to the holder. Later, during a proving interaction, the prover shows the verifier in zero knowledge that they can generate a "watermark" that shares carefully selected characteristics with the original. This is not possible unless the prover knows the holder's secret; thus, it is evidence that the credentials used for proving belong to them instead of someone else.
             </p>
             <figure id="watermark">
                 <img src="watermark.jpg" alt="watermark on a 1000-yen note">
                 <figcaption>Figure 3: Watermark of Hideyo Noguchi on a Series E 1000-yen note. The presence of such watermarks is partial evidence that a bill is not counterfeit. An inability to produce congruent likenesses suggests fraudsters pretending to be Japan's minting office. (Image credit: <a target="_blank" href="https://commons.wikimedia.org/wiki/File:Series_E_1,000_yen_note_watermark.jpg">Numister, Wikimedia Commons</a>, CC-SA Intl 4.0)</figcaption>
             </figure>
             <p>
-                Arnold and Longley are correct to claim that the guarantees associated with link secrets come with caveats. So do watermarks, of course. But neither link secrets nor watermarks is fatally flawed as a tool; they are both components of a larger strategy to eliminate fraud that the article distorts:
+                Arnold and Longley are correct to claim that the guarantees associated with link secrets come with caveats. So do watermarks, of course. But neither link secrets nor watermarks are useless; they are both components of a larger strategy to eliminate fraud that the article distorts:
             </p>
             <table>
                 <tr><th style="width:30%">Article claim</th><th>Fact</th></tr>
@@ -421,7 +421,7 @@
         <summary id="point6">6. The trust gaps it highlights arise from foolish and unlikely assumptions, not ZKP properties.</summary>
         <section class="more">
             <p>
-                Arnold and Longley build their case against ZKP-oriented credentials by positing the need for evidence of "over 18" status [Introduction]. This is a common example used in ZKP literature, and it's fine as a starting point. But Arnold and Longley distort it by positing that a ZKP-oriented approach to this problem should begin with a <em>credential</em> containing exactly and only that assertion. This takes them far from reality; ZKP proponents would never agree to such a credential as a reasonable beginning. Why?
+                Arnold and Longley build their case against ZKP-oriented credentials by imagining the need for evidence of "over 18" status [Introduction]. This is a common example used in ZKP literature, and it's fine as a starting point. But Arnold and Longley distort it by positing that a ZKP-oriented approach to this problem should begin with a <em>credential</em> containing exactly and only that assertion. This takes them far from reality; ZKP proponents would never agree to such a credential as a reasonable beginning. Why?
             </p>
             <ul>
                 <li>Because the posited credential contains no issuance date or expiration date, the "over 18" status cannot be evaluated with respect to time &mdash; past, present, or future. <em>No issuer requires "over 18" without some reference to time; therefore the posited credential is useless even before we begin analyzing what proofs might be generated from it.</em></li>
@@ -467,7 +467,7 @@
     <details>
         <summary id="point7">7. It gets limited utility exactly backward.</summary>
         <section class="more">
-            <p>The article claims that ZKP-oriented credentials "must introduce mechanisms that limit their utility."<span class="ref">[Abstract]</span> The word "must" is the problem here. It is true that some advanced features of ZKPs come with constraints, and we have discussed them in <a href="#point4">point 4</a> and <a href="#point5">point 5</a>. But contraints aren't news; they're an inherent characteristic of tradeoffs, typical of advanced features in any technology. Holders and verifiers don't have to depend on these features; they can limit themselves to just the capabilities of non-ZKP-oriented credentials, if they like. But if they do access the extra options for privacy and repudiability that ZKP-oriented credentials offer, the use cases addressable with ZKPs become a superset of those addressable without them:</p>
+            <p>The article claims that ZKP-oriented credentials "must introduce mechanisms that limit their utility."<span class="ref">[Abstract]</span> The word "must" is the problem here. It is true that some advanced features of ZKPs come with constraints, and we have discussed them in <a href="#point4">point 4</a> and <a href="#point5">point 5</a>. But contraints aren't news; they're an inherent characteristic of tradeoffs, typical of advanced features in any technology. Holders and verifiers don't have to depend on these features; they can limit themselves to just the capabilities of non-ZKP-oriented credentials if they like. But if they do access the extra options for privacy and repudiability that ZKP-oriented credentials offer, the use cases addressable with ZKPs become a superset of those addressable without them:</p>
             <figure id="addressable-use-cases">
                 <img src="addressable-use-cases.png" alt="ZKP use cases are a superset; non-ZKP a subset">
                 <figcaption>Figure 5: ZKP-addressable use cases are a superset of those addressable by the simpler alternative.</figcaption>
@@ -543,7 +543,7 @@
                 <li>Turning a gigabyte of my genome into a SHA-256 hash digest is a form of information hiding, but that doesn't make it encryption.</li>
             </ul>
             <p>
-                Encryption has a complementary operation called decryption. This is what faster computers with better cracking algorithms might do. But cryptographic commitments are nowhere near as reversible as encryption.
+                Encryption has a complementary operation called decryption. This is what faster computers with better cracking algorithms might do. But cryptographic commitments have no such complement. They are nowhere near as reversible as encryption.
             </p>
             <p>
                 Cryptographic commitments are a bit like shadows. By inspecting a shadow, you can tell something about the object that cast it. You know the object existed, and you can estimate its visual magnitude at the point where it interrupted the light. You also know something about its shape. However, you cannot reconstruct a three-dimensional object from a two-dimensional shadow; an infinite number of three-dimensional objects could interrupt light in the same way. They could have any color or texture or mass or orientation.
