@@ -56,7 +56,7 @@
                 <figcaption>Figure 1: The definition of zero-knowledge proofs in the AL article is far too narrow.</figcaption>
             </figure>
             <p>
-                What it would take for a proof to fall outside the largest oval in the diagram above? <em>It would have to leak knowledge beyond what circumstances require.</em> In other words, it would have to be careless or promiscious or clumsy. The ZKP standard &mdash; <em>in the interests of privacy, be careful to never prove something beyond what's required</em> &mdash; is nothing more nor less than the familiar cybersecurity principle to trust as little as possible.<span class="ref">[<a id="refe" href="#notee">e</a>]</span> This is the standard Arnold and Longley would have us believe is fatally flawed?
+                What it would take for a proof to fall outside the largest oval in the diagram above? <em>It would have to leak knowledge beyond what circumstances require.</em> In other words, it would have to be careless or promiscious or clumsy. The ZKP standard &mdash; <em>in the interests of privacy, be careful to never prove something beyond what's required</em> &mdash; is simply the familiar cybersecurity principle to trust as little as possible.<span class="ref">[<a id="refe" href="#notee">e</a>]</span> This is the standard Arnold and Longley would have us believe is fatally flawed?
             </p>
             <p>
                 Large portions of Arnold and Longley's reasoning is based on a <dfn>composition fallacy</dfn> that if something is true about a subcategory (simple ZKPOKs with obvious limits), it must be true about its parent category (complex, rich ZKPs).<span class="ref">[<a id="ref4" href="#note4">4</a>]</span>. They argue from a basic misunderstanding of what is possible with ZKP-oriented credentials, and what would violate the actual standard of zero knowledge rather than the narrow standard they assert. Most of the article's section 2 falls apart due to this flaw.
@@ -249,7 +249,7 @@
                 <tr><th style="width:30%">Article claim</th><th>Fact</th></tr>
                 <tr>
                     <td>Correlation secrets are the only mechanism that ZKP-oriented credentials use to prevent fraudulent transfer.</td>
-                    <td>Plenty of mechanisms exist to bind ZKP-oriented credentials to their legitimate holder. This includes the same choices available with non-ZKP-oriented credentials: disclosure of identifiers or other data fields to make reputation vulnerable (see <a href="#point1.3">point 1.3</a>). It also includes biometrics (see <a href="#point4.1">point 4.1</a> below). Each mechanism has tradeoffs. Link secrets are just another option, with another set of tradeoffs. Link secrets can be combined with other options; they are not mutually exclusive.</td>
+                    <td>Plenty of mechanisms exist to bind ZKP-oriented credentials to their legitimate holder. This includes the same choices available with non-ZKP-oriented credentials: disclosure of identifiers or other data fields to make reputation vulnerable (see <a href="#point1.3">point 1.3</a>). It also includes biometrics (see <a href="#point4.1">point 4.1</a> below). Each mechanism has tradeoffs. Link secrets are just another option, with another set of tradeoffs. ZKP creds contain them, and ZKPs reference them, but verifiers who don't like them can ignore them. Link secrets can also be combined with other options; they are not mutually exclusive.</td>
                 </tr>
                 <tr>
                     <td>Provers are forced to accept link secret guarantees if they interact with a prover that uses ZKPs.</td>
@@ -360,7 +360,7 @@
                     </p>
                     <p>So if claim 1 isn't a reasonable concern, what about claim 2? The only inference we can make from it is that Arnold and Longley deeply misunderstand the underlying cryptography, as discussed in detail in <a href="#point8">point 8</a>.</p>
                     <p>
-                        The bottom line here is that it's easy, safe, and sometimes appropriate to detect link secret reuse. The technique is not mandatory, but it does give verifiers useful options. And this reinforces the larger point, which is that link secrets as a whole are a useful tool, if they're used wisely instead of naively as the article wants us to imagine. They can be combined with techniques like this one, or like escrow, or like biometrics, or like non-ZKP-like identifier disclosure, to achieve whatever level of assurance a verifier wants.
+                        The bottom line here is that it's easy, safe, and sometimes appropriate to detect link secret reuse. The technique is not mandatory, but it does give verifiers useful options. And this reinforces the larger point, which is that link secrets are a useful tool, if they're used wisely instead of naively as the article wants us to imagine. They can be combined with techniques like this one, or like escrow, or like biometrics, or like non-ZKP-like identifier disclosure, to achieve whatever level of assurance a verifier wants.
                     </p>
                 </section>
             </details>
