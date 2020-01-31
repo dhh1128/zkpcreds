@@ -405,3 +405,11 @@ article hr {
     margin-left: 0;
     padding-right: 0.2em;
 }
+
+td.gap {
+    background-color: #ffe0e0;
+}
+
+td.nogap {
+    background-color: #e0ffe0;
+}
