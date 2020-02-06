@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Rebuttal to Arnold and Longley's ZKP article</title>
+    <title>Wisely Used, ZKP Credentials are Trustworthy:
+        Rebuttal to Arnold and Longley's article</title>
     <link rel="stylesheet" href="default.css">
 </head>
 <body>
 
 <header id="banner">
-    <h1>Rebuttal to Arnold and Longley's ZKP article</h1>
-    <h2>Daniel Hardman, January 2020</h2>
+    <h1>Wisely Used, ZKP Credentials are Trustworthy</h1>
+    <h2>Rebuttal to Arnold and Longley's article</h2>
+    <h2>Daniel Hardman, February 2020</h2>
 </header>
 
 <article>
+    <p>Third parties are not equal. Are they actively participating in the interaction, or unaware of it? How much do they know about either party or the interaction itself? How auditable is the third party?</p>
     <details>
         <summary>Background</summary>
         <section class="more">
@@ -20,7 +23,7 @@
             </p>
 
             <p>
-                The authors' formulation of tradeoffs into a trust paradox is insightful (though <a href="#point3">flawed</a>). We agree on a few other points, too (see <a href="#summary">Summary</a>). However, the article's application of the paradox to ZKP-oriented credentials is deeply misleading. It perpetuates misunderstanding of the technology it criticizes, propagating baseless FUD. It needs to be debunked.
+                The authors' formulation of tradeoffs into a trust paradox is insightful (though <a href="#point3">flawed</a>). We agree on a few other points, too (see <a href="#summary">Summary</a>). However, the article's application of the paradox to ZKP-oriented credentials is deeply misleading. It perpetuates misunderstanding of the technology it criticizes, propagating baseless FUD. Differing views about the value of privacy and security features in ZKPs are healthy. However, we're not entitled to our own facts about what they are or how they work. We're not entitled to exaggeration or convenient fallacies.
             </p>
 
             <p>
@@ -37,19 +40,22 @@
         <summary id="point1">1. The article defines "zero-knowledge proofs" wrong, setting up a basic fallacy.</summary>
         <section class="more">
             <p>
-                This is the first and most fundamental flaw in Arnold and Longley's thinking. It taints nearly everything in the article. They characterize zero-knowledge proofs like this:
+                This is the first and most fundamental flaw in Arnold and Longley's thinking. It taints nearly everything in the article, because it means they're arguing about a type of credential that doesn't exist. They characterize zero-knowledge proofs like this:
             </p>
             <blockquote>
                 ZKPs allow provers to prove they possess a certain piece of knowledge with the verifier learning nothing more than this fact.<span class="ref">[AL, Introduction]</span>
             </blockquote>
             <p>
-                Notice that Arnold and Longley cite nobody here. They can't, because this is NOT a good definition of zero-knowledge proofs in general, or of ZKPs in credentialing ecosystems; instead, it describes a subcategory of ZKP called a <dfn>zero-knowledge proof <em style="text-decoration:underline">of knowledge</em></dfn> (<dfn>ZKPOK</dfn>)<span class="ref">[<a id="ref1" href="#note1">1</a>]</span>. It assumes a single fact in isolation, rather than the common case where primitive ZKPOKs are composed into sophisticated systems (think ZK-SNARK circuits and predicates). Here is the definition of the more general concept, from the seminal paper on ZKPs:
+                Notice that Arnold and Longley cite nobody here. They can't, because this is not a good definition of zero-knowledge proofs in general. Far more importantly, it's not a good characterization of ZKPs in credentialing ecosystems. Instead, this accurately describes a subcategory of ZKP called a <dfn>zero-knowledge proof <em style="text-decoration:underline">of knowledge</em></dfn> (<dfn>ZKPOK</dfn>)<span class="ref">[<a id="ref1" href="#note1">1</a>]</span>. And the description assumes a single fact in isolation, rather than the common case where primitive ZKPOKs are composed into sophisticated systems (think ZK-SNARK circuits and predicates). Here is the definition of the more general concept, from the seminal paper on ZKPs:
             </p>
             <blockquote>
                 Zero-knowledge proofs are defined as those proofs that convey no additional knowledge other than the correctness of the proposition in question.<span class="ref">[<a id="ref2" href="#note2">2</a>]</span>
             </blockquote>
             <p>
-                Note the difference: <em>ZKPs aren't limited to proofs of possession of a single fact</em>. The knowledge in question can be complex<span class="ref">[<a id="refb" href="#noteb">b</a>]</span> (e.g., a proposition about the truth and relatedness of many assertions by an issuer about a subject), and it need not demonstrate that the prover knows something.<span class="ref">[<a id="refa" href="#notea">a</a>]</span> Rather, the defining characteristic of ZKPs is that they don't leak "additional knowledge":
+                <em>That</em> is a good description of the intent, scope, and limits of ZKPs as used in ZKP-oriented credentialing systems.
+            </p>
+            <p>
+                The difference may sound subtle, but it matters. <em>ZKPs aren't limited to proofs of possession of a single fact</em>. The knowledge in question can be complex<span class="ref">[<a id="refb" href="#noteb">b</a>]</span> (e.g., a proposition about the truth and relatedness of many assertions by an issuer about a subject), and it need not demonstrate that the prover knows something.<span class="ref">[<a id="refa" href="#notea">a</a>]</span> Rather, the defining characteristic of ZKPs is that they don't leak "additional knowledge":
             </p>
             <figure id="compare-defs">
                 <img src="compare-defs.png" alt="AL def is subset of actual def that matters">
