@@ -385,9 +385,9 @@ article hr {
   padding-top: 1.6rem;
 }
 
-#endnotes > .more > p {
-    margin-left: 2.6em;
-    text-indent: -2.6em;
+#endnote-items > p {
+    margin-left: 2.7em;
+    text-indent: -2.5em;
 }
 
 .preword {
