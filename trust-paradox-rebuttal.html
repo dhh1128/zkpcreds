@@ -569,7 +569,7 @@
                 The problem with this narrative is that it's based on a false equivalence. Encryption is generally acknowledged to have a limited shelf-life due to advances in cryptanalysis and computing power. Because of this, it suits the authors' purposes to have us to believe that link secrets are shared by encrypting them. If this were true, then link secrets might be vulnerable as Arnold and Longley claim.
                 </p>
             <p>
-                But link secrets aren't shared by encrypting them; in fact, they aren't <em>shared</em> at all. Instead, they bind their owner using a technique called <dfn>cryptographic commitments</dfn>. Commitment schemes are the mathematical equivalent of a secure coin flip. They require Alice to make and share <em>a commitment</em> to a value V at an early time, and then later require her to prove characteristics of V. These mechanisms guarantee mathematically that she can't change which V she chose; she's bound to her earlier commitment, with no ability to manipulate the outcome. If she picked heads, she can't claim she picked tails. If she is using link secret X, she can't substitute link secret Y.<span class="ref">[<a id="refa" href="#notea">a</a>]</span>
+                But link secrets aren't shared by encrypting them; in fact, they aren't <em>shared</em> at all. Instead, they bind their owner using a technique called <dfn>cryptographic commitments</dfn>. Commitment schemes are the mathematical equivalent of a secure coin flip. They require Alice to make and share <em>a commitment</em> to a value V at an early time, and then later require her to prove characteristics of V. These mechanisms guarantee mathematically that she can't change which V she chose; she's bound to her earlier commitment, with no ability to manipulate the outcome. If she picked heads, she can't claim she picked tails. If she is using link secret X, she can't substitute link secret Y.<span class="ref">[<a id="ref36" href="#note36">36</a>]</span>
             </p>
             <p>
                 Notice what's shared in such a scheme: a commitment, not an encrypted secret. These are not at all the same thing. In <a href="#point4">point 4</a>, we compared commitments to watermarks; the secret would be the printing equipment that makes the watermarks. You don't embed printing equipment in currency; you embed hard-to-fake manifestations of printing equipment.
@@ -818,7 +818,7 @@
             <p id="note33"><span class="ref">[<a href="#ref33">33</a>]</span>&nbsp; See Camenisch, J. and Shoup, V. "Practical Verifiable Encryption and Decryption of Discrete Logarithms." <cite>Advances in Cryptology - CRYPTO 2003</cite>. <a target="source" href="https://www.shoup.net/papers/verenc.pdf">https://www.shoup.net/papers/verenc.pdf</a>. Also Lyubashevsky, V. and Neven, G. "One-Shot Verifiable Encryption from Lattices." <cite>EUROCRYPT 2017</cite>. <a target="source" href="https://eprint.iacr.org/2017/122.pdf">https://eprint.iacr.org/2017/122.pdf</a>. See also the article cited in <a href="#note30">endnote 30</a>.</p>
             <p id="note34"><span class="ref">[<a href="#ref34">34</a>]</span>&nbsp; Camenisch, J. and Lysyanskaya, A. "An Efficient System for Non-transferable Anonymous Credentials with Optional Anonymity Revocation." International Conference on the Theory and Applications of Cryptographic Techniques. 2001. <a target="source" href="https://eprint.iacr.org/2001/019.pdf">https://eprint.iacr.org/2001/019.pdf</a>.</p>
             <p id="note35"><span class="ref">[<a href="#ref35">35</a>]</span>&nbsp; See Hardman, D. and Harchandani, L. "Preventing Transferrability with ZKP-based Credentials." <cite>Rebooting Web of Trust 9</cite>. Aug 2019. <a target="source" href="http://j.mp/38Gs2bR">http://j.mp/38Gs2bR</a>.</p>
-            <p id="notea"><span class="ref">[<a href="#refa">a</a>]</span>&nbsp; Damg&aring;rd, I. and Nielsen, J. "Commitment Schemes and Zero-Knowledge Protocols." Aarhus University, BRICS. 2011. <a target="source" href="http://j.mp/2P6BAoQ">http://j.mp/2P6BAoQ</a>.</p>
+            <p id="note36"><span class="ref">[<a href="#ref36">36</a>]</span>&nbsp; Damg&aring;rd, I. and Nielsen, J. "Commitment Schemes and Zero-Knowledge Protocols." Aarhus University, BRICS. 2011. <a target="source" href="http://j.mp/2P6BAoQ">http://j.mp/2P6BAoQ</a>.</p>
         </section>
     </details>
 </article>
@@ -826,6 +826,7 @@
 </body>
 
 </html>
+
 
 
 
