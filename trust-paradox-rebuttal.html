@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ZKP Credentials Enhance Trust:
-        Rebuttal to Arnold and Longley's article</title>
+    <title>No Paradox Here: ZKPs Deliver Practical Trust Every Day
+        (rebuttal to Arnold and Longley's article)</title>
     <link rel="stylesheet" href="default.css">
 </head>
 <body>
 
 <header id="banner">
-    <h1>ZKP Credentials Enhance Trust</h1>
-    <h2>Rebuttal to Arnold and Longley's article</h2>
+    <h1>No Paradox Here: ZKPs Deliver Practical Trust Every Day</h1>
+    <h2>rebuttal to Arnold and Longley's article</h2>
     <h2>Daniel Hardman, February 2020</h2>
 </header>
 
@@ -684,96 +684,96 @@
         <summary id="summary">Summary (where we agree and disagree)</summary>
         <section class="more">
             <table>
-                <tr><th style="width:45%">Idea</th><th>AL article</th><th style="width:45%">Authors of this rebuttal</th></tr>
+                <tr><th style="width:44%">Claim in AL article</th><th>Reality</th><th style="width:44%">Comment</th></tr>
                 <tr>
                     <td>When a verifier agrees to accept less assurance about attributes of a holder, they are making a trust tradeoff.</td>
-                    <td>Yes</td>
-                    <td>Yes. All credentials offer choices about how much is proved, so this is true with all credentials.</td>
+                    <td class="nogap">True</td>
+                    <td>All credentials offer choices about how much is proved. This caveat is relevant regardless of ZKP usage.</td>
                 </tr>
                 <tr>
                     <td>Strongly identified holders are more likely to be trusted in some contexts.</td>
-                    <td>Yes</td>
-                    <td>Yes. The longer ZKP technology remains misunderstood, the truer this will be.</td>
+                    <td class="nogap">True</td>
+                    <td>Besides the basic dynamics that make this true, misunderstandings about ZKP technology could constitute a self-fulfilling prophecy.</td>
                 </tr>
                 <tr>
                     <td>Absolute anonymity is not desirable in many contexts. A bank won't give a mortage to a lender they can't take to court.</td>
-                    <td>Yes</td>
-                    <td>Yes. And we'd note that absolute anonymity is almost never possible, even if it were desirable. See <a href="#point2.1">point 2.1</a>.</td>
+                    <td class="nogap">True</td>
+                    <td>Absolute anonymity is almost never possible, even if it were desirable. See <a href="#point2.1">point 2.1</a>.</td>
                 </tr>
                 <tr>
-                    <td>The feature set of ZKP-oriented credentials maps closely onto the concept of primitive zero-knowledge proofs of knowledge.</td>
-                    <td>Yes</td>
-                    <td>No. See <a href="#point1">point 1</a>.</td>
+                    <td>The feature set of ZKP-oriented credentials maps directly onto the concept of primitive zero-knowledge proofs of knowledge.</td>
+                    <td class="gap">False</td>
+                    <td>See <a href="#point1">point 1</a>.</td>
                 </tr>
                 <tr>
                     <td>ZKP-oriented credentials aim for / enforce absolute anonymity of the holder.</td>
-                    <td>Yes</td>
+                    <td class="gap">False</td>
                     <td>No, they aim to improve privacy. Sometimes that means a selectable degree of anonymity (see <a href="#point1.3">point 1.3</a> and <a href="#point2">point 2</a>; other times it means granular control over repudiation (see <a href="#point5">point 5</a>).</td>
                 </tr>
                 <tr>
-                    <td>A proof that discloses a person's name can be zero knowledge.</td>
-                    <td>No</td>
-                    <td>Yes. See <a href="#point1.3">point 1.3</a>.</td>
+                    <td>A proof that discloses a person's name, phone number, or DID cannot be zero knowledge.</td>
+                    <td class="gap">False</td>
+                    <td>See <a href="#point1.3">point 1.3</a>.</td>
                 </tr>
                 <tr>
                     <td>A proof that discloses a person's name with ZKP-oriented credentials amounts to the same thing as showing a credential with only the person's name.</td>
-                    <td>Yes.</td>
-                    <td>No. With ZKPs, the existence and validity of the issuer's signature, rather than its value, gets disclosed. Sometimes this difference matters. See <a href="#point1.3">point 1.3</a>.</td>
+                    <td class="gap">False</td>
+                    <td>With ZKPs, the existence and validity of the issuer's signature, rather than its value, gets disclosed. Sometimes this difference matters. See <a href="#point1.3">point 1.3</a>.</td>
                 </tr>
                 <tr>
                     <td>A holder/prover must be vulnerable to a verifier before it is reasonable to trust them.</td>
-                    <td>Yes</td>
-                    <td>No. A verifier must know that the holder/prover is constrained <em>enough</em> by incentives, context, technical possibilities, history, reputation, and similar factors to match the desired level of assurance. Trust isn't binary, and it's not purely reputation-based. Likewise, a holder/prover must know something about <em>verifier</em> constraints to extend trust the other way (a need that Arnold and Longley entirely ignore). See <a href="#point3">point 3</a>.</td>
+                    <td class="gap">False</td>
+                    <td>A verifier must know that the holder/prover is constrained <em>enough</em> by incentives, context, technical possibilities, history, reputation, and similar factors to match the desired level of assurance. Trust isn't binary, and it's not purely reputation-based. Likewise, a holder/prover must know something about <em>verifier</em> constraints to extend trust the other way (a need that Arnold and Longley entirely ignore). See <a href="#point3">point 3</a>.</td>
                 </tr>
                 <tr>
                     <td>ZKP-oriented credentials force verifiers to trust link secrets or to reject the tech.</td>
-                    <td>Yes</td>
-                    <td>No. Link secrets are always available to use, but verifiers can choose to trust them or not, per preference and circumstances. See <a href="#point4">point 4</a> and <a href="#point6.2">point 6.2</a>.</td>
+                    <td class="gap">False</td>
+                    <td>Link secrets are always available to use, but verifiers can choose to trust them or not, per preference and circumstances. See <a href="#point4">point 4</a> and <a href="#point6.2">point 6.2</a>.</td>
                 </tr>
                 <tr>
-                    <td>ZKP-oriented credentials can't be reliably bound to their holder.</td>
-                    <td>Yes.</td>
-                    <td>No. See <a href="#point4">point 4</a>.</td>
+                    <td>ZKP-oriented credentials can't be bound reliably to their holder.</td>
+                    <td class="gap">False</td>
+                    <td>See <a href="#point4">point 4</a>.</td>
                 </tr>
                 <tr>
                     <td>Biometrics aren't relevant to ZKP-oriented credentials, since they are guaranteed to disclose strong correlators.</td>
-                    <td>Yes.</td>
-                    <td>No. See <a href="#point4.1">point 4.1</a>.</td>
+                    <td class="gap">False</td>
+                    <td>See <a href="#point4.1">point 4.1</a>.</td>
                 </tr>
                 <tr>
-                    <td>Holders/provers must interact in a non-repudiable way in all cases, to be trustworthy.</td>
-                    <td>Yes.</td>
-                    <td>No. This is a good default, but there are meaningful corner cases where a repduiable proof is important. See <a href="#point5">point 5</a>.</td>
+                    <td>Holders/provers must interact in a non-repudiable way in all cases, to achieve trust.</td>
+                    <td class="gap">False</td>
+                    <td>This is a good default, but there are meaningful corner cases where a repduiable proof is important. See <a href="#point5">point 5</a>.</td>
                 </tr>
                 <tr>
-                    <td>Credentials and proofs can be conflated for the purposes of the analysis.</td>
-                    <td>Yes.</td>
-                    <td>No. The tech is called "zero-knowledge <em>proofs</em>," not "zero-knowledge <em>credentials</em>," for a reason. See <a href="#point6">point 6</a>.</td>
+                    <td>Credentials and proofs can be conflated for the purposes of analyzing ZKP trust.</td>
+                    <td class="gap">False</td>
+                    <td>The tech is called "zero-knowledge <em>proofs</em>," not "zero-knowledge <em>credentials</em>," for a reason. See <a href="#point6">point 6</a>.</td>
                 </tr>
                 <tr>
-                    <td>A thought experiment about a 1-attribute ZKP derived from a 1-attribute credential yields deep insights about the limits of ZKP tech.</td>
-                    <td>Yes.</td>
-                    <td>No. Such an example is misleading and unrealistic. See <a href="#point6">point 6</a>.</td>
+                    <td>A thought experiment about a 1-attribute ZKPOK derived from a 1-attribute credential yields deep insights about the limits of ZKP tech.</td>
+                    <td class="gap">False</td>
+                    <td>Such an example is misleading and unrealistic. See <a href="#point6">point 6</a>.</td>
                 </tr>
                 <tr>
                     <td>ZKP-oriented credentials are only useful in corner cases.</td>
-                    <td>Yes.</td>
-                    <td>No. Use cases addressable with ZKP-oriented credentials is a superset of the ones addressable without them. See <a href="#point7">point 7</a>.</td>
+                    <td class="gap">False</td>
+                    <td>The set of use cases addressable with ZKP-oriented credentials is a superset of the ones addressable without them. See <a href="#point7">point 7</a>.</td>
                 </tr>
                 <tr>
                     <td>ZKP-oriented credentials contain an encrypted copy of a link secret, and presentations derived from them give an encrypted copy of that secret to verifiers. Therefore they are susceptible to decryption if cryptography advances.</td>
-                    <td>Yes.</td>
-                    <td>No. This is a misunderstanding of a technique called cryptographic commitments. See <a href="#point8">point 8</a>.</td>
+                    <td class="gap">False</td>
+                    <td>This false claim arises from a misunderstanding of a technique called cryptographic commitments. See <a href="#point8">point 8</a>.</td>
                 </tr>
                 <tr>
                     <td>ZKP-oriented credentials are inherently, uniquely susceptible to a proxy attack.</td>
-                    <td>Yes.</td>
-                    <td>No. All credentials are susceptible to proxying in various ways. Countermeasures can raise the level of assurance for both credential types, to the same degree and in roughly the same way. ZKPs offer more options than the alternative. See <a href="#point9">point 9</a>.</td>
+                    <td class="gap">False</td>
+                    <td>All credentials are susceptible to proxying in various ways. Countermeasures can raise the level of assurance for both credential types, to the same degree and in roughly the same way. ZKPs offer more options than the alternative. See <a href="#point9">point 9</a>.</td>
                 </tr>
                 <tr>
                     <td>ZKP-oriented credentials encourage correlation.</td>
-                    <td>Yes.</td>
-                    <td>No. Just the opposite. See <a href="#point4.3">point 4.3</a>.</td>
+                    <td class="gap">False</td>
+                    <td>Just the opposite. See <a href="#point4.3">point 4.3</a>.</td>
                 </tr>
             </table>
         </section>
