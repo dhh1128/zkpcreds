@@ -18,20 +18,24 @@
         <summary>Abstract</summary>
         <section class="more">
             <p>
-            Arnold and Longley write that ZKP-oriented credentials create unfettered anonymity that lets malicious holders cheat. They are mistaken. The article offers an unreasonable definition of ZKPs, and then draws fallacious conclusions from it. It quotes experts out of context. It asserts anonymity goals for ZKPs that no ZKP proponent would endorse. It posits foolish behavior from verifiers, and then imputes the consequences to ZKPs. It distorts the role of link secrets in a pragmatic security strategy. It is dismissive of biometrics and escrow techniques. It predicts proxy abuse without recognizing equivalent risk in ZKP alternatives, and without acknowledging the simple and effective countermeasures that real-world deployments use. It contains factual errors in its description of cryptographic commitments. All of this is explained in detail, with citations, in the rebuttal below.
+            Arnold and Longley write that ZKP-oriented credentials create irresponsible anonymity, letting malicious holders cheat. They are mistaken. Their article offers an unreasonable definition of ZKPs, and then draws fallacious conclusions from it. It quotes experts out of context, asserting anonymity goals for ZKPs that no ZKP proponent would endorse. It posits foolish behavior from verifiers, and then imputes the consequences to ZKPs. It distorts the role of link secrets in a pragmatic security strategy. It is dismissive of biometrics and escrow techniques. It predicts proxy abuse without recognizing equivalent risk in ZKP alternatives, and without acknowledging the simple and effective countermeasures that real-world deployments use. It contains factual errors in its description of cryptographic commitments. All of this is explained in detail, with citations, in the rebuttal below.
             </p>
             <p>The reality is that ZKP-oriented credentials are a powerful tool. Like all tools, they can be misused. Expert cryptographers have been exploring that possiblity for nearly thirty years, and have identified good safeguards. With helpful software to manage the details, it is not hard to use ZKP-oriented credentials safely. They deliver business and personal trust in production systems every day.</p>
         </section>
     </details>
     <details>
-        <summary>Background</summary>
+        <summary>Setting Expectations</summary>
         <section class="more">
             <p>
-                Arnold and Longley's formulation of tradeoffs into a trust paradox is insightful (though <a href="#point3">flawed</a>). We agree on a few other points, too (see <a href="#summary">Summary</a>). However, the way the article applies its trust paradox to ZKP-oriented credentials is deeply misleading. It perpetuates misunderstanding of the technology it criticizes. Debate about the value of privacy and security features in ZKPs is healthy; alternate facts, exaggerations, and fallacies are not.
+                The Arnold Longley article enumerates worries that critics of ZKP-oriented credentials have surfaced less formally before. It is thus a welcome step; it makes concrete, public dialog possible. Readers can evaluate both sides of an argument on its merits.
             </p>
 
             <p>
-                Unfortunately, picking apart a narrative this complex demands thoughtful and sustained attention. I apologize in advance for the eye-glazing detail. I've organized this doc into expandable sections, so you can skim or dive deep as desired. (Please note that to limit scope, this rebuttal focuses only on issues raised in the Arnold Longley article. The larger debate about credential models includes many additional topics. See <a href="#learningmore">Learning More</a> for links.)
+                Who are those readers? PhD cryptologists have been trading formal proofs about the integrity of ZKP-based trust for nearly three decades; neither the Arnold Longley article nor this rebuttal offers new insights for them. But the ideas may be new for the community that's building verifiable credentials and self-sovereign identity. That is the audience for the special issue of <cite>IEEE Communications Standards</cite> where the article appeared, and for this rebuttal. It includes smart people from a variety of business, legal, government, and software backgrounds. Thus, it seems better to minimize the formalisms and terminology of specialists to keep this accessible for all.
+            </p>
+
+            <p>
+                Even so, analyzing something this complex demands thoughtful and sustained attention. I apologize in advance for the eye-glazing detail. I've organized this doc into expandable sections, so you can skim or dive deep as desired. (Please note that to limit scope, this rebuttal focuses only on issues raised in the Arnold Longley article. The larger debate about credential models includes many additional topics. See <a href="#learningmore">Learning More</a> for links.)
             </p>
 
             <p>
@@ -47,19 +51,31 @@
                 This is the first and most fundamental flaw in Arnold and Longley's thinking. It taints nearly everything in the article, because there's a huge delta between ZKP-oriented credentials as the authors imagine them, and ZKP-oriented credentials in production in the "real world."
             </p>
             <p>
-                Arnold and Longley characterize zero-knowledge proofs like this:
+                Arnold and Longley informally characterize zero-knowledge proofs like this:
             </p>
             <blockquote>
                 ZKPs allow provers to prove they possess a certain piece of knowledge with the verifier learning nothing more than this fact.<span class="ref">[AL, Introduction]</span>
             </blockquote>
             <p>
-                This definition covers some of the correct semantic territory, but it is too simplistic. The authors insist on its narrowness, and its trivial application to credentials, in Example 2.5. This is where they want us to imagine proving that a single piece of information (over 18 status) is known to the holder. They suppose that this process will start with a single credential that attests exactly and only this one fact, and that the proving is not interactive. (See <a href="#point6">point 6</a> for a detailed critique of the example.)
+                This definition &mdash; the only one they offer &mdash; does cover some of the correct semantic territory. However, it is too simplistic. Yet the authors insist on its narrowness, and its trivial application to credentials, in Example 2.5. This is where they want us to imagine proving that a single piece of information (over 18 status) is known to the holder. They suppose that this process will start with a single credential that attests exactly and only this one fact, and that the proving is not interactive. (See <a href="#point6">point 6</a> for a detailed critique of the example.)
             </p>
             <p>
-                Arnold and Longley cite nobody to justify their definition or its application to credentials. They can't, because they haven't faithfully described zero-knowledge proofs in general &mdash; and more importantly, they haven't described ZKPs as used in credentialing ecosystems. Instead, the concept they're working from is a subcategory of ZKP called a <dfn>zero-knowledge proof <em style="text-decoration:underline">of knowledge</em></dfn> (<dfn>ZKPOK</dfn>)<span class="ref">[<a id="ref1" href="#note1">1</a>]</span>. Primitive ZKPOKs deal with single facts in isolation, rather than the common case where ZKPOKs are composed into sophisticated systems that satisfy human trust requirements. Think zkSNARK circuits and predicates, plus human common sense. Commenting on the need to understand ZKPs more broadly, one scholar states, "It must be noted that the concept of proof in ZKP is different from the traditional mathematical concept. Mathematical proofs are strict, using either self evident statements or statements obtained from proofs established beforehand. ZK proofs are more similar to the dynamic process used by humans to establish the truth of a statement throughout the exchange of information."<span class="ref">[<a id="ref2" href="#note2">2</a>]</span> Highlighting the possibility of interaction in ZKPs, another says, "Thus, a 'proof' in this context is not a fixed and static object, but rather an randomized and dynamic (i.e., interactive) process in which the verifier interacts with the prover. Intuitively, one may think of this interaction as consisting of 'tricky' questions asked by the verifier, to which the prover has to reply 'convincingly'."<span class="ref">[<a id="ref3" href="#note3">3</a>]</span>
+                Arnold and Longley cite nobody to justify their definition or its application to credentials. They can't, because they haven't faithfully described zero-knowledge proofs in general &mdash; and more importantly, they haven't described ZKPs as used in credentialing ecosystems. Instead, the concept they're working from is a subcategory of ZKP called a <dfn>zero-knowledge proof <em style="text-decoration:underline">of knowledge</em></dfn> (<dfn>ZKPOK</dfn>)<span class="ref">[<a id="ref1" href="#note1">1</a>]</span>. Primitive ZKPOKs deal with single facts in isolation, rather than the common case where ZKPOKs are composed into sophisticated systems that satisfy human trust requirements. Think zkSNARK circuits and predicates, plus human common sense.
             </p>
             <p>
-                Here is a better definition of the more general concept, from the seminal paper on ZKPs:
+                Commenting on the need to understand ZKPs more broadly, one scholar states:
+            </p>
+            <blockquote>
+                It must be noted that the concept of proof in ZKP is different from the traditional mathematical concept. Mathematical proofs are strict, using either self evident statements or statements obtained from proofs established beforehand. ZK proofs are more similar to the dynamic process used by humans to establish the truth of a statement throughout the exchange of information.<span class="ref">[<a id="ref2" href="#note2">2</a>]</span>
+            </blockquote>
+            <p>
+                Highlighting the possibility of interaction in ZKPs, another says:
+            </p>
+            <blockquote>
+                Thus, a 'proof' in this context is not a fixed and static object, but rather an randomized and dynamic (i.e., interactive) process in which the verifier interacts with the prover. Intuitively, one may think of this interaction as consisting of 'tricky' questions asked by the verifier, to which the prover has to reply 'convincingly'."<span class="ref">[<a id="ref3" href="#note3">3</a>]</span>
+            </blockquote>
+            <p>
+                These comments align with the canonical definition of the broader and more relevant concept, from the seminal paper on ZKPs:
             </p>
             <blockquote>
                 Zero-knowledge proofs are defined as those proofs that convey no additional knowledge other than the correctness of the proposition in question.<span class="ref">[<a id="ref4" href="#note4">4</a>]</span>
